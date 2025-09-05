@@ -4,14 +4,13 @@ import com.tdeBack.minhaSaude.enums.Tipo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
+@Table(name = "usuarios")
 @Getter
 @Setter
-@Builder
 public class Usuario {
 
     @Id
@@ -19,6 +18,7 @@ public class Usuario {
     Long id;
 
     @Email
+    @NotBlank
     String email;
 
     @NotBlank
