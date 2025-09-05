@@ -39,7 +39,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> buscarEmail(Usuario u) {
-        return usuarioRepository.findByEmail(u.getEmail());
+    public Optional<Usuario> buscarEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 }
