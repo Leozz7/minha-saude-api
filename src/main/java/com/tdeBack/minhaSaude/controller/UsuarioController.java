@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -22,13 +22,13 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario u, Long id) {
+    public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
         Usuario usuario = usuarioService.atualizarUsuario(id, u);
         return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> deletarUsuario(Long id) {
+    public ResponseEntity<Usuario> deletarUsuario(@PathVariable Long id) {
         usuarioService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }
@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<Usuario> buscaEmail(String email) {
+    public ResponseEntity<Usuario> buscaEmail(@PathVariable String email) {
         return usuarioService.buscarEmail(email)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
