@@ -1,6 +1,7 @@
 package com.tdeBack.minhaSaude.model;
 
 import com.tdeBack.minhaSaude.enums.TipoUsuario;
+import com.tdeBack.minhaSaude.service.UsuarioService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +30,6 @@ public class Usuario implements UserDetails {
     @NotBlank
     String email;
 
-    @NotBlank
     String nome;
 
     @Enumerated(EnumType.STRING)
