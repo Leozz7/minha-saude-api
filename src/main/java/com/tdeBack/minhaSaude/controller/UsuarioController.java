@@ -1,6 +1,5 @@
 package com.tdeBack.minhaSaude.controller;
 
-import com.tdeBack.minhaSaude.enums.AutenticacaoDTO;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class UsuarioController {
     @PostMapping("/criar")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario u) {
 
-        if (usuarioService.findByEmail(u.getEmail()) != null) {
+        if (usuarioService.existsByEmail(u.getEmail())) {
             return ResponseEntity.badRequest().build();
         } else {
             u.setSenha(new BCryptPasswordEncoder().encode(u.getSenha()));
