@@ -1,5 +1,5 @@
 package com.tdeBack.minhaSaude.enums;
 
 public enum TipoUsuario {
-    ADMIN, DEFAULT
+    ADMIN, USER
 }
