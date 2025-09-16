@@ -4,7 +4,7 @@ Este projeto foi desenvolvido como parte do **Trabalho de Desenvolvimento de Exe
 O sistema implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de clínicas médicas**, com autenticação via **JWT** e persistência em banco de dados relacional.
 
 ## ⚙️ Tecnologias Utilizadas
-- **Java 17+**  
+- **Java 22**  
 - **Spring Boot** (Tomcat embutido)  
 - **Spring Security + JWT**  
 - **Spring Data JPA / Hibernate**  
