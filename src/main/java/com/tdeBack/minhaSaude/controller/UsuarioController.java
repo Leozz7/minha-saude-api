@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.controller;
 
+import com.tdeBack.minhaSaude.Config.Security.Token;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -20,6 +22,9 @@ public class UsuarioController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private Token tokenService;
 
     @PostMapping("/criar")
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario u) {
@@ -34,26 +39,34 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody Usuario u) {
-        var UsernamePassword = new UsernamePasswordAuthenticationToken(u.getEmail(), u.getSenha());
-        var auth = this.authenticationManager.authenticate(UsernamePassword);
+    public ResponseEntity<?> login(@RequestBody Usuario u) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(u.getEmail(), u.getSenha());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok(u);
+        Usuario usuarioLogado = (Usuario) auth.getPrincipal();
+
+        String token = tokenService.gerarToken(usuarioLogado);
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "email", usuarioLogado.getEmail(),
+                "nome", usuarioLogado.getNome()
+        ));
     }
 
-    @PutMapping("/{id}")
+
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
         Usuario usuario = usuarioService.atualizarUsuario(id, u);
         return ResponseEntity.ok(usuario);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Usuario> deletarUsuario(@PathVariable Long id) {
         usuarioService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> lista = usuarioService.listar();
         return ResponseEntity.ok(lista);
