@@ -3,11 +3,9 @@ package com.tdeBack.minhaSaude.service;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -27,6 +25,7 @@ public class UsuarioService {
 
         u.setNome(uAtualizado.getNome());
         u.setEmail(uAtualizado.getEmail());
+        u.setSenha(uAtualizado.getSenha());
         return usuarioRepository.save(u);
     }
 
