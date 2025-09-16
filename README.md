@@ -1,6 +1,6 @@
 # 🏥 API de Gestão de Clínicas
 
-Este projeto foi desenvolvido como parte do **Trabalho de Desenvolvimento de Exercício (TDE)** da disciplina de Programação Orientada a Serviços.  
+Este projeto foi desenvolvido como parte do **Trabalho de Desenvolvimento de Exercício (TDE)** da disciplina de Programação Backend.  
 O sistema implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de clínicas médicas**, com autenticação via **JWT** e persistência em banco de dados relacional.
 
 ## ⚙️ Tecnologias Utilizadas
