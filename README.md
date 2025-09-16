@@ -8,7 +8,7 @@ O sistema implementa uma **API REST** em **Java (Spring Boot)** para a **gestão
 - **Spring Boot** (Tomcat embutido)  
 - **Spring Security + JWT**  
 - **Spring Data JPA / Hibernate**  
-- **Banco de Dados Relacional** (MySQL/PostgreSQL configurável via `.env`)  
+- **Banco de Dados Relacional** (MySQL)
 - **Maven**  
 
 ---
