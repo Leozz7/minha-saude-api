@@ -27,14 +27,16 @@ public class UsuarioController {
     private Token tokenService;
 
     @PostMapping("/criar")
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario u) {
+    public ResponseEntity<String> criarUsuario(@RequestBody Usuario u) {
 
         if (usuarioService.existsByEmail(u.getEmail())) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity
+                    .badRequest()
+                    .body("Email já cadastrado");
         } else {
             u.setSenha(new BCryptPasswordEncoder().encode(u.getSenha()));
             Usuario usuario = usuarioService.criarUsuario(u);
-            return ResponseEntity.ok(usuario);
+            return ResponseEntity.ok().body("Usuario cadastrado");
         }
     }
 
