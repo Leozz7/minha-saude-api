@@ -31,7 +31,7 @@ public class UsuarioController {
                     .body("Email já cadastrado");
         } else {
             u.setSenha(new BCryptPasswordEncoder().encode(u.getSenha()));
-            Usuario usuario = usuarioService.criarUsuario(u);
+            usuarioService.criarUsuario(u);
             return ResponseEntity.ok().body("Usuario cadastrado");
         }
     }
