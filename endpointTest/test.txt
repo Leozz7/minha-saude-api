@@ -1,0 +1,41 @@
+POST - Criar Admin (http://localhost:8080/api/usuarios/criar)
+{
+    "email": "leandro.sena@example.com",
+    "nome": "Leandro Snea",
+    "tipo": "ADMIN",
+    "senha": "123456"
+}
+
+POST - Criar um usuario (http://localhost:8080/api/usuarios/criar)
+{
+    "email": "testando.sena@example.com",
+    "nome": "TESTANDO",
+    "tipo": "USER",
+    "senha": "123456"
+}
+
+POST - Fazer Login como Admin (http://localhost:8080/api/usuarios/login)
+{
+    "email": "leandro.sena@example.com",
+    "senha": "123456"
+}
+
+POST - Fazer Login como Usuario (http://localhost:8080/api/usuarios/login)
+{
+    "email": "testando.sena@example.com",
+    "senha": "123456"
+}
+
+GET - Listar todos usuarios cadastrados (http://localhost:8080/api/usuarios/listar)
+(Tem que estar autenticado)
+
+PUT - Atualizar usuario (http://localhost:8080/api/usuarios/atualizar/1)
+(Tem que ser um admin)
+{
+    "nome": "Thiago Mariano",
+    "email": "thiago@example.com",
+    "senha": "123456"
+}
+
+DELETE - Deletar usuario (http://localhost:8080/api/usuarios/deletar/1)
+(Tem que ser um admin)
