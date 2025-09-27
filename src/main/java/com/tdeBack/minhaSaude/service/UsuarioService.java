@@ -19,11 +19,11 @@ public class UsuarioService {
     private AuthenticationManager authenticationManager;
 
 
-    public Usuario criarUsuario(Usuario usuario) {
+    public void criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("Email já cadastrado");
         }
-        return usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
     }
 
     public Usuario atualizarUsuario(Long id, Usuario uAtualizado) {
