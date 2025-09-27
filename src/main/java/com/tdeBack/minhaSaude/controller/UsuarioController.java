@@ -19,10 +19,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     @Autowired
     private Token tokenService;
 
@@ -42,10 +38,8 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario u) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(u.getEmail(), u.getSenha());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        Usuario usuarioLogado = (Usuario) auth.getPrincipal();
+        Usuario usuarioLogado = usuarioService.login(u);
 
         String token = tokenService.gerarToken(usuarioLogado);
         return ResponseEntity.ok(Map.of(

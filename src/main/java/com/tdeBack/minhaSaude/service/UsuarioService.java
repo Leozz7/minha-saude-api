@@ -3,6 +3,8 @@ package com.tdeBack.minhaSaude.service;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,10 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     public Usuario criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
@@ -27,6 +33,13 @@ public class UsuarioService {
         u.setEmail(uAtualizado.getEmail());
         u.setSenha(uAtualizado.getSenha());
         return usuarioRepository.save(u);
+    }
+
+    public Usuario login(Usuario u) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(u.getEmail(), u.getSenha());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+
+        return (Usuario) auth.getPrincipal();
     }
 
     public void deletarUsuario(Long id) {
