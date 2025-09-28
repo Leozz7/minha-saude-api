@@ -7,7 +7,7 @@ Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de cl
 
 ## ⚙️ Tecnologias Utilizadas
 - **Java 22**  
-- **Spring Boot** (Tomcat embutido)  
+- **Spring Boot**
 - **Spring Security + JWT**  
 - **Spring Data JPA / Hibernate**  
 - **MySQL**  
@@ -62,3 +62,10 @@ DB_PASSWORD=exemplo
 JWT_SECRET=sua_chave_secreta
 JWT_EXPIRATION=3600000
 ```
+
+### 3. Rode o projeto com Maven
+```
+mvn spring-boot:run
+```
+### 4. Teste a API
+Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
