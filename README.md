@@ -63,9 +63,9 @@ JWT_SECRET=sua_chave_secreta
 JWT_EXPIRATION=3600000
 ```
 
-3. Rode o projeto com Maven
+### 3. Rode o projeto com Maven
 ```
 mvn spring-boot:run
 ```
-4. Teste a API
+### 4. Teste a API
 Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
