@@ -5,6 +5,6 @@ CREATE TABLE usuarios (
     email VARCHAR(255) UNIQUE NOT NULL,
     nome VARCHAR(255) NOT NULL,
     tipo ENUM('ADMIN', 'USER') NOT NULL,
-    senha TEXT NOT NULL
+    senha VARCHAR(255) NOT NULL
 );
 
