@@ -29,7 +29,7 @@ public class UsuarioService {
 
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario uAtualizado) {
-        var u = usuarioRepository.findById(id)
+        Usuario u = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
 
         u.setNome(uAtualizado.getNome());
@@ -46,7 +46,7 @@ public class UsuarioService {
 
     @Transactional
     public void deletarUsuario(Long id) {
-        var u = usuarioRepository.findById(id)
+        Usuario u = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
 
         usuarioRepository.delete(u);

@@ -39,7 +39,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario u) {
 
-        var usuarioLogado = usuarioService.login(u);
+        Usuario usuarioLogado = usuarioService.login(u);
 
         String token = tokenService.gerarToken(usuarioLogado);
         return ResponseEntity.ok(Map.of(
@@ -52,7 +52,7 @@ public class UsuarioController {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
-        var usuario = usuarioService.atualizarUsuario(id, u);
+        Usuario usuario = usuarioService.atualizarUsuario(id, u);
         return ResponseEntity.ok(usuario);
     }
 
