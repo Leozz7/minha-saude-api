@@ -39,7 +39,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario u) {
 
-        Usuario usuarioLogado = usuarioService.login(u);
+        var usuarioLogado = usuarioService.login(u);
 
         String token = tokenService.gerarToken(usuarioLogado);
         return ResponseEntity.ok(Map.of(
@@ -52,19 +52,19 @@ public class UsuarioController {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
-        Usuario usuario = usuarioService.atualizarUsuario(id, u);
+        var usuario = usuarioService.atualizarUsuario(id, u);
         return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Usuario> deletarUsuario(@PathVariable Long id) {
+    public ResponseEntity<String> deletarUsuario(@PathVariable Long id) {
         usuarioService.deletarUsuario(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Usuario deletado");
     }
 
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> listarUsuarios() {
-        List<Usuario> lista = usuarioService.listar();
+        var lista = usuarioService.listar();
         return ResponseEntity.ok(lista);
     }
 }
