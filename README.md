@@ -59,7 +59,7 @@ Crie um arquivo .env na raiz do projeto
 DB_URL=jdbc:mysql://localhost:3306/minhasaude?useSSL=false&serverTimezone=UTC
 DB_USER=exemplo
 DB_PASSWORD=exemplo
-JWT_SECRET=sua_chave_secreta
+JWT_SECRET=umaChaveSeguraComPeloMenos32Bytes!!!
 JWT_EXPIRATION=3600000
 ```
 
