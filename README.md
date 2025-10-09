@@ -6,7 +6,7 @@ Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de cl
 ---
 
 ## ⚙️ Tecnologias Utilizadas
-- **Java 22**  
+- **Java 21**  
 - **Spring Boot**
 - **Spring Security + JWT**  
 - **Spring Data JPA / Hibernate**  
