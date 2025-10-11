@@ -52,12 +52,10 @@ public class UsuarioService {
         usuarioRepository.delete(u);
     }
 
-    @Transactional(readOnly = true)
     public List<Usuario> listar() {
         return usuarioRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public boolean existsByEmail(String email) {
         return usuarioRepository.existsByEmail(email);
     }
