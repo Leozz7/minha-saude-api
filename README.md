@@ -18,7 +18,7 @@ Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de cl
 ## 🔑 Funcionalidades
 
 ### 👥 Gestão de Usuários
-- Cadastro de usuários (**somente admin**)  
+- Cadastro de usuários
 - Atualização dos próprios dados  
 - Alteração de senha com senha anterior  
 - Reset de senha por **admin**  
