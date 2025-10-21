@@ -1,6 +1,7 @@
 package com.tdeBack.minhaSaude.controller;
 
 import com.tdeBack.minhaSaude.Config.Security.Token;
+import com.tdeBack.minhaSaude.dto.UsuarioDTO;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
-        var lista = usuarioService.listar();
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
+        var lista = usuarioService.listar()
+                .stream()
+                .map(UsuarioDTO::new) // chama o construtor que recebe Usuario
+                .toList();
         return ResponseEntity.ok(lista);
     }
 }
