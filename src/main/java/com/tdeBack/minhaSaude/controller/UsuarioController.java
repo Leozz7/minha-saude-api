@@ -67,7 +67,7 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
         var lista = usuarioService.listar()
                 .stream()
-                .map(UsuarioDTO::new) // chama o construtor que recebe Usuario
+                .map(UsuarioDTO::new)
                 .toList();
         return ResponseEntity.ok(lista);
     }
