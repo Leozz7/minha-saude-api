@@ -24,6 +24,31 @@ public class PacienteService {
 
     @Transactional
     public Paciente criarPaciente(Paciente paciente) {
+        LocalDate dataNascimento = paciente.getDataNascimento().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        var idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+
+        if (idade < 18) {
+            if (paciente.getResponsavel() == null) {
+                throw new IllegalArgumentException("Pacientes menores de 18 anos devem ter um responsavel cadastrado");
+            }
+
+            LocalDate dataNascimentoResp = paciente.getResponsavel().getDataNascimento().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            int idadeResp = Period.between(dataNascimentoResp, LocalDate.now()).getYears();
+
+            if (idadeResp < 18) {
+                throw new IllegalArgumentException("O responsavel não pode ser menor de idade");
+            }
+
+            Responsavel responsavel = paciente.getResponsavel();
+            responsavelRepository.save(responsavel);
+        }
+
         if (pacienteRepository.existsByCpf(paciente.getCpf())) {
             throw new IllegalArgumentException("CPF ja cadastrado");
         }
