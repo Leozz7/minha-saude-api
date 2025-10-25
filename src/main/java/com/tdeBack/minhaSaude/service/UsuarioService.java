@@ -3,6 +3,8 @@ package com.tdeBack.minhaSaude.service;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -52,8 +54,8 @@ public class UsuarioService {
         usuarioRepository.delete(u);
     }
 
-    public List<Usuario> listar() {
-        return usuarioRepository.findAll();
+    public Page<Usuario> listar(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
     public boolean existsByEmail(String email) {
