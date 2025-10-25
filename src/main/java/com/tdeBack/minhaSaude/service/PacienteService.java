@@ -90,7 +90,7 @@ public class PacienteService {
     }
 
     public Page<Paciente> buscarPorNome(String nome, Pageable pageable) {
-        return pacienteRepository.findByName(nome, pageable);
+        return pacienteRepository.findByNomeContainingIgnoreCase(nome, pageable);
     }
 
 }

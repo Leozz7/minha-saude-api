@@ -13,5 +13,5 @@ public interface PacienteRepository extends JpaRepository<Paciente ,Long> {
     Paciente findByEmail(String email);
     boolean existsByEmail(String email);
 
-    Page<Paciente> findByName(String name, Pageable pageable);
+    Page<Paciente> findByNomeContainingIgnoreCase(String name, Pageable pageable);
 }

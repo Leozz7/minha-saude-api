@@ -39,4 +39,8 @@ public class PacienteController {
     public Page<Paciente> listar(Pageable pageable) {
         return pacienteService.listar(pageable);
     }
+    @GetMapping("/buscar/{nome}")
+    public Page<Paciente> buscarPorNome(@PathVariable String nome, Pageable pageable) {
+        return pacienteService.buscarPorNome(nome, pageable);
+    }
 }
