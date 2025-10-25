@@ -6,6 +6,8 @@ import com.tdeBack.minhaSaude.repository.PacienteRepository;
 import com.tdeBack.minhaSaude.repository.ResponsavelRepository;
 import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,8 +85,8 @@ public class PacienteService {
         pacienteRepository.delete(p);
     }
 
-    public List<Paciente> listar() {
-        return pacienteRepository.findAll();
+    public Page<Paciente> listar(Pageable pageable) {
+        return pacienteRepository.findAll(pageable);
     }
 
 }
