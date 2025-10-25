@@ -4,6 +4,8 @@ import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Responsavel;
 import com.tdeBack.minhaSaude.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,7 @@ public class PacienteController {
         return ResponseEntity.ok("Paciente deletado");
     }
     @GetMapping("/listar")
-    ResponseEntity<List<Paciente>> listar() {
-        var p = pacienteService.listar();
-        return ResponseEntity.ok(p);
+    public Page<Paciente> listar(Pageable pageable) {
+        return pacienteService.listar(pageable);
     }
 }
