@@ -2,9 +2,12 @@ package com.tdeBack.minhaSaude.controller;
 
 import com.tdeBack.minhaSaude.Config.Security.Token;
 import com.tdeBack.minhaSaude.dto.UsuarioDTO;
+import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,11 +67,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
-        var lista = usuarioService.listar()
-                .stream()
-                .map(UsuarioDTO::new)
-                .toList();
-        return ResponseEntity.ok(lista);
+    public Page<Usuario> listar(Pageable pageable) {
+        return usuarioService.listar(pageable);
     }
 }
