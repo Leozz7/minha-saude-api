@@ -89,4 +89,8 @@ public class PacienteService {
         return pacienteRepository.findAll(pageable);
     }
 
+    public Page<Paciente> buscarPorNome(String nome, Pageable pageable) {
+        return pacienteRepository.findByName(nome, pageable);
+    }
+
 }
