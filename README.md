@@ -45,6 +45,13 @@ Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de cl
 - Listagem de atendimentos entre duas datas  
 
 ---
+## 📘 Documentação com Swagger
+
+A API possui documentação interativa gerada automaticamente pelo **Swagger**, permitindo visualizar e testar os endpoints diretamente pelo navegador.
+
+Após iniciar o projeto, acesse:
+
+- **http://localhost:8080/swagger-ui/index.html**
 
 ## 🚀 Como Rodar o Projeto
 
