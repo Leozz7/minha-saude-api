@@ -53,6 +53,7 @@ Após iniciar o projeto, acesse:
 
 - **http://localhost:8080/swagger-ui/index.html**
 
+---
 ## 🚀 Como Rodar o Projeto
 
 ### 1. Clone o repositório
