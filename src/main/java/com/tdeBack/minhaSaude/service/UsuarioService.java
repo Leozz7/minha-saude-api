@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.service;
 
+import com.tdeBack.minhaSaude.enums.TipoUsuario;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UsuarioService {
     public void criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("Email já cadastrado");
+        }
+        if (usuario.getTipo() == null) {
+            usuario.setTipo(TipoUsuario.USER);
         }
         usuarioRepository.save(usuario);
     }
