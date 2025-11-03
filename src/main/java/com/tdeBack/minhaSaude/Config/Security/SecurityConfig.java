@@ -25,6 +25,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(cors -> cors.configurationSource(request -> {
+                    var config = new org.springframework.web.cors.CorsConfiguration();
+                    config.setAllowedOrigins(java.util.List.of(
+                            "http://127.0.0.1:5500",
+                            "http://localhost:5500"
+                    ));
+                    config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(java.util.List.of("*"));
+                    config.setExposedHeaders(java.util.List.of("Authorization"));
+                    config.setAllowCredentials(true);
+                    return config;
+                }))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
@@ -35,7 +47,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/procedimento/criar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/procedimento/atualizar/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/procedimento/deletar/{id}").hasRole("ADMIN")
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-resources", "/v3/api-docs.yaml"
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/swagger-resources",
+                                "/v3/api-docs.yaml"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
