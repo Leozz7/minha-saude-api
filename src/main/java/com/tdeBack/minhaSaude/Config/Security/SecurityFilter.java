@@ -29,6 +29,13 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         String token = recoverToken(request);
 
+        String path = request.getRequestURI();
+
+        if (path.startsWith("/api/usuarios/login") || path.startsWith("/api/usuarios/criar")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (token != null && !token.isBlank()) {
             String email = tokenService.validarToken(token);
 
