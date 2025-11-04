@@ -3,6 +3,8 @@ package com.tdeBack.minhaSaude.service;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +51,7 @@ public class ProcedimentoService {
         return procedimentoRepository.save(p);
     }
 
-    public List<Procedimento> listar() {
-        return procedimentoRepository.findAll();
+    public Page<Procedimento> listar(Pageable pageable) {
+        return procedimentoRepository.findAll(pageable);
     }
 }

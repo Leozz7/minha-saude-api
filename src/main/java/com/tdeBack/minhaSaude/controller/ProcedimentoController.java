@@ -4,6 +4,8 @@ import com.tdeBack.minhaSaude.dto.ProcedimentoDTO;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.service.ProcedimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +39,8 @@ public class ProcedimentoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Procedimento>> listar() {
-        return ResponseEntity.ok(procedimentoService.listar());
+    public Page<Procedimento> listar(Pageable pageable) {
+        return procedimentoService.listar(pageable);
     }
 
     @DeleteMapping("/deletar/{id}")
