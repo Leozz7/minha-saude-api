@@ -2,6 +2,7 @@ package com.tdeBack.minhaSaude.service;
 
 import com.tdeBack.minhaSaude.enums.TipoPagamento;
 import com.tdeBack.minhaSaude.model.Atendimento;
+import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -37,14 +41,18 @@ public class AtendimentoService {
         List<Procedimento> procedimentos = procedimentoRepository.findAllById(atendimento.getProcedimentoIds());
 
         if (procedimentos.isEmpty()) {
-            throw new RuntimeException("Nenhum procedimento encontrado para os IDs informados.");
+            throw new IllegalArgumentException("Nenhum procedimento encontrado para os IDs informados.");
+        }
+
+        if (atendimento.getDataAtendimento().toInstant().isAfter(Instant.from(LocalDate.now()))) {
+            throw new IllegalArgumentException("a data de atendimento esta no futuro");
         }
 
         atendimento.setUsuario(usuarioRepository.findById(usuario_id)
-                .orElseThrow(() -> new RuntimeException("Usuario nao encontrado")));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado")));
 
         atendimento.setPaciente(pacienteRepository.findById(paciente_id)
-                .orElseThrow(() -> new RuntimeException("paciente nao encontrado")));
+                .orElseThrow(() -> new IllegalArgumentException("paciente nao encontrado")));
 
 
         atendimento.setValorTotal(calculoValorProcedimentos(procedimentos, atendimento));
@@ -58,14 +66,14 @@ public class AtendimentoService {
     @Transactional
     public void deletar(Long id) {
         Atendimento atendimento = atendimentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Atendimento não encontrado."));
+                .orElseThrow(() -> new IllegalArgumentException("Atendimento não encontrado."));
         atendimentoRepository.delete(atendimento);
     }
 
     @Transactional
     public Atendimento atualizar(Long id, Atendimento atendimento) {
         Atendimento a = atendimentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Atendimento não encontrado."));
+                .orElseThrow(() -> new IllegalArgumentException("Atendimento não encontrado."));
 
         validarAtendimento(atendimento);
 
@@ -80,7 +88,7 @@ public class AtendimentoService {
 
         List<Procedimento> procedimentos = procedimentoRepository.findAllById(atendimento.getProcedimentoIds());
         if (procedimentos.isEmpty()) {
-            throw new RuntimeException("O atendimento deve conter pelo menos um procedimento válido.");
+            throw new IllegalArgumentException("O atendimento deve conter pelo menos um procedimento válido.");
         }
 
         a.setProcedimentos(procedimentos);
@@ -97,16 +105,16 @@ public class AtendimentoService {
     private void verificarCarteira(Atendimento atendimento) {
         if (atendimento.getTipoPagamento() == TipoPagamento.PLANO &&
                 (atendimento.getNumeroCarteira() == null || atendimento.getNumeroCarteira().isEmpty())) {
-            throw new RuntimeException("Número da carteira do plano de saúde é obrigatório para atendimentos de plano.");
+            throw new IllegalArgumentException("Número da carteira do plano de saúde é obrigatório para atendimentos de plano.");
         }
     }
 
     private void validarAtendimento(Atendimento atendimento) {
         if (atendimento.getProcedimentoIds() == null || atendimento.getProcedimentoIds().isEmpty()) {
-            throw new RuntimeException("O atendimento deve conter pelo menos um procedimento.");
+            throw new IllegalArgumentException("O atendimento deve conter pelo menos um procedimento.");
         }
         if (atendimento.getTipoPagamento() == null) {
-            throw new RuntimeException("Tipo de pagamento é obrigatório.");
+            throw new IllegalArgumentException("Tipo de pagamento é obrigatório.");
         }
     }
 
