@@ -34,7 +34,6 @@ public class UsuarioController {
                     .badRequest()
                     .body("Email já cadastrado");
         } else {
-            u.setSenha(new BCryptPasswordEncoder().encode(u.getSenha()));
             usuarioService.criarUsuario(u);
             return ResponseEntity.ok().body("Usuario cadastrado");
         }
