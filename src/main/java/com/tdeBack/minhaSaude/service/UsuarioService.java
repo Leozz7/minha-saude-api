@@ -44,6 +44,8 @@ public class UsuarioService {
         Usuario u = usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
 
+        uAtualizado.setSenha(passwordEncoder.encode(uAtualizado.getSenha()));
+
         u.setNome(uAtualizado.getNome());
         u.setEmail(uAtualizado.getEmail());
         u.setSenha(uAtualizado.getSenha());
