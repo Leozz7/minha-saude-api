@@ -25,7 +25,7 @@ public class UsuarioService {
     @Transactional
     public void criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new IllegalArgumentException("Email já cadastrado");
         }
         if (usuario.getTipo() == null) {
             usuario.setTipo(TipoUsuario.USER);
@@ -36,7 +36,7 @@ public class UsuarioService {
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario uAtualizado) {
         Usuario u = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
 
         u.setNome(uAtualizado.getNome());
         u.setEmail(uAtualizado.getEmail());
@@ -53,7 +53,7 @@ public class UsuarioService {
     @Transactional
     public void deletarUsuario(Long id) {
         Usuario u = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
 
         usuarioRepository.delete(u);
     }
