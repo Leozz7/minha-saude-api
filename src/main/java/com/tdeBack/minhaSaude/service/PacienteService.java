@@ -2,6 +2,7 @@ package com.tdeBack.minhaSaude.service;
 
 import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Responsavel;
+import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import com.tdeBack.minhaSaude.repository.PacienteRepository;
 import com.tdeBack.minhaSaude.repository.ResponsavelRepository;
 import jakarta.validation.constraints.Null;
@@ -23,6 +24,9 @@ public class PacienteService {
 
     @Autowired
     ResponsavelRepository responsavelRepository;
+
+    @Autowired
+    AtendimentoRepository atendimentoRepository;
 
     @Transactional
     public Paciente criarPaciente(Paciente paciente) {
@@ -81,6 +85,10 @@ public class PacienteService {
     @Transactional
     public void deletarPaciente(Long id) {
         Paciente p = pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
+
+        if (!atendimentoRepository.findByPacienteId(id).isEmpty()) {
+            throw new IllegalArgumentException("existe um atendimento registrado com esse paciente");
+        }
 
         pacienteRepository.delete(p);
     }
