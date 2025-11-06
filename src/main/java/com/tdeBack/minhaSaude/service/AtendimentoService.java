@@ -44,10 +44,14 @@ public class AtendimentoService {
             throw new IllegalArgumentException("Nenhum procedimento encontrado para os IDs informados.");
         }
 
-        if (atendimento.getDataAtendimento().toInstant().isAfter(Instant.from(LocalDate.now()))) {
-            throw new IllegalArgumentException("a data de atendimento esta no futuro");
-        }
+        LocalDate dataAtendimento = atendimento.getDataAtendimento()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
 
+        if (dataAtendimento.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("A data de atendimento não pode ser no futuro.");
+        }
         atendimento.setUsuario(usuarioRepository.findById(usuario_id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado")));
 
