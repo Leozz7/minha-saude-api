@@ -16,13 +16,17 @@ public class ProcedimentoService {
     @Autowired
     ProcedimentoRepository procedimentoRepository;
 
-    @Autowired
-    AtendimentoRepository atendimentoRepository;
 
     @Transactional
     public Procedimento criar(Procedimento p) {
         if (procedimentoRepository.existsByNome(p.getNome())) {
             throw new IllegalArgumentException("Nome de procedimento ja cadastrado");
+        }
+        if (p.getValorPlano() < 0) {
+            throw new IllegalArgumentException("o valor do plano esta negativo");
+        }
+        if (p.getValorParticular() < 0) {
+            throw new IllegalArgumentException("o valor particular está negativo");
         }
         return procedimentoRepository.save(p);
     }
@@ -37,7 +41,7 @@ public class ProcedimentoService {
     public Procedimento atualizar(Long id, Procedimento procedimento) {
 
         Procedimento p = procedimentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Procedimento não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Procedimento não encontrado"));
 
         Procedimento existente = procedimentoRepository.findByNome(procedimento.getNome());
         if (existente != null && !existente.getId().equals(id)) {
