@@ -36,6 +36,10 @@ public class PacienteService {
 
         var idade = Period.between(dataNascimento, LocalDate.now()).getYears();
 
+        if (idade < 0) {
+            throw new IllegalArgumentException("a idade do paciente é negativa");
+        }
+
         if (idade < 18) {
             if (paciente.getResponsavel() == null) {
                 throw new IllegalArgumentException("Pacientes menores de 18 anos devem ter um responsavel cadastrado");
