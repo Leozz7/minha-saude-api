@@ -33,10 +33,9 @@ public class UsuarioController {
             return ResponseEntity
                     .badRequest()
                     .body("Email já cadastrado");
-        } else {
-            usuarioService.criarUsuario(u);
-            return ResponseEntity.ok().body("Usuario cadastrado");
         }
+        usuarioService.criarUsuario(u);
+        return ResponseEntity.ok().body("Usuario cadastrado");
     }
 
     @PostMapping("/login")
