@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 public class AtendimentoDTO {
-    private Long id;
     private Long usuarioId;
     private Long pacienteId;
     private String numeroCarteira;
