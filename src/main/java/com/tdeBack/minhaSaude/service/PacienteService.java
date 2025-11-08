@@ -1,11 +1,11 @@
 package com.tdeBack.minhaSaude.service;
 
+import com.tdeBack.minhaSaude.dto.PacienteDTO;
 import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Responsavel;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import com.tdeBack.minhaSaude.repository.PacienteRepository;
 import com.tdeBack.minhaSaude.repository.ResponsavelRepository;
-import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.List;
 
 @Service
 public class PacienteService {
@@ -29,7 +28,18 @@ public class PacienteService {
     AtendimentoRepository atendimentoRepository;
 
     @Transactional
-    public Paciente criarPaciente(Paciente paciente) {
+    public Paciente criarPaciente(PacienteDTO dto) {
+
+        Paciente paciente = new Paciente();
+        paciente.setCpf(dto.getCpf());
+        paciente.setEmail(dto.getEmail());
+        paciente.setNome(dto.getNome());
+        paciente.setCidade(dto.getCidade());
+        paciente.setBairro(dto.getBairro());
+        paciente.setDataNascimento(dto.getDataNascimento());
+        paciente.setEstado(dto.getEstado());
+        paciente.setTelefone(dto.getTelefone());
+
         LocalDate dataNascimento = paciente.getDataNascimento().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
@@ -71,7 +81,7 @@ public class PacienteService {
     }
 
     @Transactional
-    public Paciente atualizarPaciente(Paciente paciente, Long id) {
+    public Paciente atualizarPaciente(PacienteDTO paciente, Long id) {
         Paciente p = pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
 
         p.setCpf(paciente.getCpf());

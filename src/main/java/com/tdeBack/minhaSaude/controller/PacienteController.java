@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.controller;
 
+import com.tdeBack.minhaSaude.dto.PacienteDTO;
 import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Responsavel;
 import com.tdeBack.minhaSaude.service.PacienteService;
@@ -19,14 +20,14 @@ public class PacienteController {
     PacienteService pacienteService;
 
     @PostMapping("/criar")
-    ResponseEntity<Paciente> criar(@RequestBody Paciente p) {
-        var paciente = pacienteService.criarPaciente(p);
+    ResponseEntity<Paciente> criar(@RequestBody PacienteDTO dto) {
+        Paciente paciente = pacienteService.criarPaciente(dto);
         return ResponseEntity.ok(paciente);
     }
 
     @PutMapping("/atualizar/{id}")
-    ResponseEntity<Paciente> atualizar(@RequestBody Paciente p, @PathVariable Long id) {
-        var paciente = pacienteService.atualizarPaciente(p, id);
+    ResponseEntity<Paciente> atualizar(@RequestBody PacienteDTO dto, @PathVariable Long id) {
+        Paciente paciente = pacienteService.atualizarPaciente(dto, id);
         return ResponseEntity.ok(paciente);
     }
 
