@@ -48,7 +48,7 @@ public class Paciente {
     @NotNull
     String bairro;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "responsavel_id")
     Responsavel responsavel;
 }

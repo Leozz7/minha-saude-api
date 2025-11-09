@@ -11,10 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Date;
 
 @Service
 public class PacienteService {
@@ -39,43 +39,25 @@ public class PacienteService {
         paciente.setDataNascimento(dto.getDataNascimento());
         paciente.setEstado(dto.getEstado());
         paciente.setTelefone(dto.getTelefone());
-
-        LocalDate dataNascimento = paciente.getDataNascimento().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-
-        var idade = Period.between(dataNascimento, LocalDate.now()).getYears();
-
-        if (idade < 0) {
-            throw new IllegalArgumentException("a idade do paciente é negativa");
-        }
-
-        if (idade < 18) {
-            if (paciente.getResponsavel() == null) {
-                throw new IllegalArgumentException("Pacientes menores de 18 anos devem ter um responsavel cadastrado");
-            }
-
-            LocalDate dataNascimentoResp = paciente.getResponsavel().getDataNascimento().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-
-            int idadeResp = Period.between(dataNascimentoResp, LocalDate.now()).getYears();
-
-            if (idadeResp < 18) {
-                throw new IllegalArgumentException("O responsavel não pode ser menor de idade");
-            }
-
-            Responsavel responsavel = paciente.getResponsavel();
-            responsavelRepository.save(responsavel);
-        }
+        paciente.setResponsavel(dto.getResponsavel());
 
         if (pacienteRepository.existsByCpf(paciente.getCpf())) {
-            throw new IllegalArgumentException("CPF ja cadastrado");
+            throw new IllegalArgumentException("CPF de paciente ja cadastrado");
         }
 
         if (pacienteRepository.existsByEmail(paciente.getEmail())) {
-            throw new IllegalArgumentException("email ja cadastrado");
+            throw new IllegalArgumentException("email de paciente ja cadastrado");
         }
+
+        if (responsavelRepository.existsByCpf(paciente.getResponsavel().getCpf())) {
+            throw new IllegalArgumentException("CPF de responsavel ja cadastrado");
+        }
+
+        if (responsavelRepository.existsByEmail(paciente.getResponsavel().getEmail())) {
+            throw new IllegalArgumentException("email de responsavel ja cadastrado");
+        }
+
+        validarPacienteDeMenor(paciente);
 
         return pacienteRepository.save(paciente);
     }
@@ -91,8 +73,14 @@ public class PacienteService {
         p.setEstado(paciente.getEstado());
         p.setTelefone(paciente.getTelefone());
         p.setDataNascimento(paciente.getDataNascimento());
-        p.setResponsavel(paciente.getResponsavel());
 
+        Responsavel responsavel = responsavelRepository.findById(paciente.getResponsavel().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Responsavel não encontrado"));
+
+        p.setResponsavel(responsavel);
+        validarPacienteDeMenor(p);
+
+        responsavelRepository.save(p.getResponsavel());
         return pacienteRepository.save(p);
     }
 
@@ -115,4 +103,31 @@ public class PacienteService {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome, pageable);
     }
 
+    public void validarPacienteDeMenor(Paciente paciente) {
+
+
+        var idade = Period.between(converterData(paciente.getDataNascimento()), LocalDate.now()).getYears();
+
+        if (idade < 0) {
+            throw new IllegalArgumentException("a idade do paciente é negativa");
+        }
+
+        if (idade < 18) {
+            if (paciente.getResponsavel() == null) {
+                throw new IllegalArgumentException("Pacientes menores de 18 anos devem ter um responsavel cadastrado");
+            }
+
+            int idadeResp = Period.between(converterData(paciente.getResponsavel().getDataNascimento()), LocalDate.now()).getYears();
+
+            if (idadeResp < 18) {
+                throw new IllegalArgumentException("O responsavel não pode ser menor de idade");
+            }
+        }
+    }
+
+    public LocalDate converterData(Date data) {
+        return data.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
 }
