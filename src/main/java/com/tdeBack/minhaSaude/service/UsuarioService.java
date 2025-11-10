@@ -28,7 +28,7 @@ public class UsuarioService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void criarUsuario(Usuario usuario) {
+    public Usuario criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("Email já cadastrado");
         }
@@ -36,7 +36,7 @@ public class UsuarioService {
             usuario.setTipo(TipoUsuario.USER);
         }
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Transactional
@@ -68,9 +68,5 @@ public class UsuarioService {
 
     public Page<Usuario> listar(Pageable pageable) {
         return usuarioRepository.findAll(pageable);
-    }
-
-    public boolean existsByEmail(String email) {
-        return usuarioRepository.existsByEmail(email);
     }
 }
