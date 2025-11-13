@@ -1,0 +1,33 @@
+POST - Criar Atendimento
+
+http://localhost:8080/api/atendimentos/criar
+
+{
+  "usuarioId": 1,
+  "pacienteId": 2,
+  "numeroCarteira": "PLANO-554488",
+  "tipoPagamento": "PLANO",
+  "dataAtendimento": "2024-10-28T10:30:00",
+  "procedimentoIds": [1]
+}
+
+PUT - Atualizar Atendimento
+
+http://localhost:8080/api/atendimentos/atualizar/{id}
+
+{
+  "usuarioId": 1,
+  "pacienteId": 2,
+  "numeroCarteira": "",
+  "tipoPagamento": "PARTICULAR",
+  "dataAtendimento": "2024-10-28T10:30:00",
+  "procedimentoIds": [1]
+}
+
+GET - Listar Atendimentos
+
+http://localhost:8080/api/atendimentos/listar
+
+DELETE - Deletar Atendimento
+
+http://localhost:8080/api/atendimentos/deletar/{id}

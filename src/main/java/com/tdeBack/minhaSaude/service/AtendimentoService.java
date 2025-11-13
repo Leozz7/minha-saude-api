@@ -1,22 +1,20 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.enums.TipoPagamento;
-import com.tdeBack.minhaSaude.model.Atendimento;
-import com.tdeBack.minhaSaude.model.Paciente;
-import com.tdeBack.minhaSaude.model.Procedimento;
-import com.tdeBack.minhaSaude.model.Usuario;
-import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
-import com.tdeBack.minhaSaude.repository.PacienteRepository;
-import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
-import com.tdeBack.minhaSaude.repository.UsuarioRepository;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
+import com.tdeBack.minhaSaude.enums.TipoPagamento;
+import com.tdeBack.minhaSaude.model.Atendimento;
+import com.tdeBack.minhaSaude.model.Procedimento;
+import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
+import com.tdeBack.minhaSaude.repository.PacienteRepository;
+import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
+import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 
 @Service
 public class AtendimentoService {

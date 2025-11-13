@@ -1,19 +1,17 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.enums.TipoUsuario;
-import com.tdeBack.minhaSaude.model.Usuario;
-import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.tdeBack.minhaSaude.enums.TipoUsuario;
+import com.tdeBack.minhaSaude.model.Usuario;
+import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
