@@ -41,7 +41,7 @@ public class AtendimentoService {
         List<Procedimento> procedimentos = procedimentoRepository.findAllById(atendimento.getProcedimentoIds());
 
         if (procedimentos.isEmpty()) {
-            throw new IllegalArgumentException("Nenhum procedimento encontrado para os IDs informados.");
+            throw new IllegalArgumentException("Nenhum procedimento encontrado para os ID informado.");
         }
 
         LocalDate dataAtendimento = atendimento.getDataAtendimento()
