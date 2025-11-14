@@ -1,15 +1,14 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.model.Procedimento;
-import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
-import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.tdeBack.minhaSaude.dto.ProcedimentoDTO;
+import com.tdeBack.minhaSaude.model.Procedimento;
+import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
 
 @Service
 public class ProcedimentoService {
@@ -18,7 +17,12 @@ public class ProcedimentoService {
 
 
     @Transactional
-    public Procedimento criar(Procedimento p) {
+    public Procedimento criar(ProcedimentoDTO dto) {
+        Procedimento p = new Procedimento();
+        p.setNome(dto.getNome());
+        p.setDescricao(dto.getDescricao());
+        p.setValorPlano(dto.getValorPlano());
+        p.setValorParticular(dto.getValorParticular());
         if (procedimentoRepository.existsByNome(p.getNome())) {
             throw new IllegalArgumentException("Nome de procedimento ja cadastrado");
         }
@@ -38,19 +42,19 @@ public class ProcedimentoService {
     }
 
     @Transactional
-    public Procedimento atualizar(Long id, Procedimento procedimento) {
+    public Procedimento atualizar(Long id, ProcedimentoDTO dto) {
 
         Procedimento p = procedimentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Procedimento não encontrado"));
 
-        Procedimento existente = procedimentoRepository.findByNome(procedimento.getNome());
+        Procedimento existente = procedimentoRepository.findByNome(dto.getNome());
         if (existente != null && !existente.getId().equals(id)) {
             throw new IllegalArgumentException("Nome de procedimento já cadastrado");
         }
-        p.setNome(procedimento.getNome());
-        p.setDescricao(procedimento.getDescricao());
-        p.setValorPlano(procedimento.getValorPlano());
-        p.setValorParticular(procedimento.getValorParticular());
+        p.setNome(dto.getNome());
+        p.setDescricao(dto.getDescricao());
+        p.setValorPlano(dto.getValorPlano());
+        p.setValorParticular(dto.getValorParticular());
 
         return procedimentoRepository.save(p);
     }

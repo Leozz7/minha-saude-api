@@ -45,12 +45,20 @@ public class PacienteService {
             throw new IllegalArgumentException("CPF de paciente ja cadastrado");
         }
 
+        if (paciente.getCpf().length() != 11) {
+            throw new IllegalArgumentException("CPF de paciente invalido");
+        }
+
         if (pacienteRepository.existsByEmail(paciente.getEmail())) {
             throw new IllegalArgumentException("email de paciente ja cadastrado");
         }
 
         if (responsavelRepository.existsByCpf(paciente.getResponsavel().getCpf())) {
             throw new IllegalArgumentException("CPF de responsavel ja cadastrado");
+        }
+
+        if (paciente.getResponsavel().getCpf().length() != 11) {
+            throw new IllegalArgumentException("CPF de responsavel invalido");
         }
 
         if (responsavelRepository.existsByEmail(paciente.getResponsavel().getEmail())) {
@@ -104,9 +112,7 @@ public class PacienteService {
     }
 
     public void validarPacienteDeMenor(Paciente paciente) {
-
-
-        var idade = Period.between(converterData(paciente.getDataNascimento()), LocalDate.now()).getYears();
+        var idade = calcularIdade(paciente.getDataNascimento());
 
         if (idade < 0) {
             throw new IllegalArgumentException("a idade do paciente é negativa");
@@ -117,7 +123,7 @@ public class PacienteService {
                 throw new IllegalArgumentException("Pacientes menores de 18 anos devem ter um responsavel cadastrado");
             }
 
-            int idadeResp = Period.between(converterData(paciente.getResponsavel().getDataNascimento()), LocalDate.now()).getYears();
+            int idadeResp = calcularIdade(paciente.getResponsavel().getDataNascimento());
 
             if (idadeResp < 18) {
                 throw new IllegalArgumentException("O responsavel não pode ser menor de idade");
@@ -129,5 +135,9 @@ public class PacienteService {
         return data.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+    }
+
+    public int calcularIdade(Date data) {
+        return Period.between(converterData(data), LocalDate.now()).getYears();
     }
 }

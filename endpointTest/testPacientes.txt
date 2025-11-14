@@ -1,0 +1,45 @@
+POST - Criar Paciente
+
+http://localhost:8080/api/pacientes/criar
+
+{
+  "cpf": "98765324234100",
+  "nome": "Maria Souza",
+  "email": "marsia@email.com",
+  "telefone": "988888888",
+  "dataNascimento": "2010-08-15",
+  "estado": "Bahia",
+  "cidade": "Salvador",
+  "bairro": "Bairro Novo",
+  "responsavel": {
+    "cpf": "112233423444556",
+    "nome": "Carlos Souza",
+    "email": "carlsos@email.com",
+    "telefone": "977777777",
+    "dataNascimento": "1980-04-20"
+  }
+}
+
+PUT - Atualizar Paciente
+
+http://localhost:8080/api/pacientes/atualizar/{id}
+
+{
+  "cpf": "123.456.789-10",
+  "email": "maria.silva@nova.com",
+  "nome": "Maria da Silva Santos",
+  "telefone": "(71) 99876-5432",
+  "dataNascimento": "1990-05-12",
+  "estado": "Bahia",
+  "cidade": "Salvador",
+  "bairro": "Caminho das Árvores",
+  "responsavel": null
+}
+
+GET - Listar Pacientes
+
+http://localhost:8080/api/pacientes/listar?size=1&sort=nome,desc
+
+DELETE - Deletar Paciente
+
+http://localhost:8080/api/pacientes/deletar/{id}

@@ -6,10 +6,9 @@ import com.tdeBack.minhaSaude.service.ProcedimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/procedimentos")
@@ -19,33 +18,37 @@ public class ProcedimentoController {
     private ProcedimentoService procedimentoService;
 
     @PostMapping("/criar")
-    public ResponseEntity<Procedimento> criar(@RequestBody ProcedimentoDTO dto) {
-        Procedimento p = new Procedimento();
-        p.setNome(dto.getNome());
-        p.setDescricao(dto.getDescricao());
-        p.setValorPlano(dto.getValorPlano());
-        p.setValorParticular(dto.getValorParticular());
-        return ResponseEntity.ok(procedimentoService.criar(p));
+    public ResponseEntity<?> criar(@RequestBody ProcedimentoDTO dto) {
+        try {
+            Procedimento p = procedimentoService.criar(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(p);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @PutMapping("atualizar/{id}")
-    public ResponseEntity<Procedimento> atualizar(@PathVariable Long id, @RequestBody ProcedimentoDTO dto) {
-        Procedimento p = new Procedimento();
-        p.setNome(dto.getNome());
-        p.setDescricao(dto.getDescricao());
-        p.setValorPlano(dto.getValorPlano());
-        p.setValorParticular(dto.getValorParticular());
-        return ResponseEntity.ok(procedimentoService.atualizar(id, p));
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ProcedimentoDTO dto) {
+        try {
+            Procedimento p = procedimentoService.atualizar(id, dto);
+            return ResponseEntity.ok(p);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/listar")
-    public Page<Procedimento> listar(Pageable pageable) {
-        return procedimentoService.listar(pageable);
+    public ResponseEntity<Page<Procedimento>> listar(Pageable pageable) {
+        return ResponseEntity.ok(procedimentoService.listar(pageable));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<String> deletar(@PathVariable Long id) {
-        procedimentoService.deletar(id);
-        return ResponseEntity.ok("Procedimento deletado");
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        try {
+            procedimentoService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

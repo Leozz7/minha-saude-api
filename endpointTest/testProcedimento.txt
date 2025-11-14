@@ -1,0 +1,29 @@
+POST - Criar Procedimento
+
+http://localhost:8080/api/procedimentos/criar
+
+{
+  "nome": "Ultrassom Obstétrico",
+  "valorPlano": 150.00,
+  "valorParticular": 300.00,
+  "descricao": "Exame de imagem para acompanhamento gestacional"
+}
+
+PUT - Atualizar Procedimento
+
+http://localhost:8080/api/procedimentos/atualizar/{id}
+
+{
+  "nome": "Ultrassom Obstétrico - Revisado",
+  "valorPlano": 150.00,
+  "valorParticular": 300.00,
+  "descricao": "Exame de imagem para acompanhamento da gravidez"
+}
+
+GET - Listar Procedimentos
+
+http://localhost:8080/api/procedimentos/listar
+
+DELETE - Deletar Procedimento
+
+http://localhost:8080/api/procedimentos/deletar/{id}

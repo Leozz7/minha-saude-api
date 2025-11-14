@@ -1,19 +1,17 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.enums.TipoUsuario;
-import com.tdeBack.minhaSaude.model.Usuario;
-import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.tdeBack.minhaSaude.enums.TipoUsuario;
+import com.tdeBack.minhaSaude.model.Usuario;
+import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -28,7 +26,7 @@ public class UsuarioService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void criarUsuario(Usuario usuario) {
+    public Usuario criarUsuario(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("Email já cadastrado");
         }
@@ -36,7 +34,7 @@ public class UsuarioService {
             usuario.setTipo(TipoUsuario.USER);
         }
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Transactional
@@ -68,9 +66,5 @@ public class UsuarioService {
 
     public Page<Usuario> listar(Pageable pageable) {
         return usuarioRepository.findAll(pageable);
-    }
-
-    public boolean existsByEmail(String email) {
-        return usuarioRepository.existsByEmail(email);
     }
 }
