@@ -5,9 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Patients from "./pages/Pacientes";
-import Appointments from "./pages/Atendimentos";
-import Procedures from "./pages/Procedimentos";
+import Pacientes from "./pages/Pacientes";
+import Atendimentos from "./pages/Atendimentos";
+import Procedimentos from "./pages/Procedimentos";
 import DashboardLayout from "./components/DashboardLayout";
 import NotFound from "./pages/NotFound";
 
@@ -31,30 +31,29 @@ const App = () => (
             }
           />
           <Route
-            path="/patients"
+            path="/pacientes"
             element={
               <DashboardLayout>
-                <Patients />
+                <Pacientes />
               </DashboardLayout>
             }
           />
           <Route
-            path="/appointments"
+            path="/atendimentos"
             element={
               <DashboardLayout>
-                <Appointments />
+                <Atendimentos />
               </DashboardLayout>
             }
           />
           <Route
-            path="/procedures"
+            path="/procedimentos"
             element={
               <DashboardLayout>
-                <Procedures />
+                <Procedimentos />
               </DashboardLayout>
             }
           />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

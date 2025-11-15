@@ -16,9 +16,9 @@ import { Button } from "@/components/ui/button";
 
 const menuItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Pacientes", url: "/patients", icon: Users },
-  { title: "Atendimentos", url: "/appointments", icon: Calendar },
-  { title: "Procedimentos", url: "/procedures", icon: FileText },
+  { title: "Pacientes", url: "/pacientes", icon: Users },
+  { title: "Atendimentos", url: "/atendimentos", icon: Calendar },
+  { title: "Procedimentos", url: "/procedimentos", icon: FileText },
 ];
 
 export function AppSidebar() {

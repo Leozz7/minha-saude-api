@@ -13,12 +13,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 
-const Appointments = () => {
+const Atendimentos = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [appointments, setAppointments] = useState([]);
+  const [atendimento, setatendimento] = useState([]);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const fetchatendimento = async () => {
       try {
         const token = localStorage.getItem("token");
 
@@ -46,16 +46,16 @@ const Appointments = () => {
           };
         });
 
-        setAppointments(formatted);
+        setatendimento(formatted);
       } catch (error) {
         console.error("Erro ao buscar atendimentos:", error);
       }
     };
 
-    fetchAppointments();
+    fetchatendimento();
   }, []);
 
-  const filteredAppointments = appointments.filter((a: any) => {
+  const filteredatendimento = atendimento.filter((a: any) => {
     const term = searchTerm.toLowerCase();
 
     return (
@@ -100,7 +100,7 @@ const Appointments = () => {
               </TableHeader>
 
               <TableBody>
-                {filteredAppointments.map((appointment: any) => (
+                {filteredatendimento.map((appointment: any) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <div className="font-medium">{appointment.date}</div>
@@ -129,7 +129,7 @@ const Appointments = () => {
                   </TableRow>
                 ))}
 
-                {filteredAppointments.length === 0 && (
+                {filteredatendimento.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
                       Nenhum atendimento encontrado.
@@ -145,4 +145,4 @@ const Appointments = () => {
   );
 };
 
-export default Appointments;
+export default Atendimentos;

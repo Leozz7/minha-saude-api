@@ -14,12 +14,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 
-const Patients = () => {
+const Pacientes = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [patients, setPatients] = useState([]);
+  const [paciente, setpaciente] = useState([]);
 
   // 🔥 Busca da API
-  const fetchPatients = async () => {
+  const fetchpaciente = async () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -40,7 +40,7 @@ const Patients = () => {
       }
 
       const data = await response.json();
-      setPatients(data.content);
+      setpaciente(data.content);
 
     } catch (error) {
       console.error("Erro ao buscar pacientes:", error);
@@ -48,10 +48,10 @@ const Patients = () => {
   };
 
   useEffect(() => {
-    fetchPatients();
+    fetchpaciente();
   }, []);
 
-  const filteredPatients = patients.filter((p: any) =>
+  const filteredpaciente = paciente.filter((p: any) =>
     p.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -73,7 +73,7 @@ const Patients = () => {
             Gerencie os pacientes da clínica
           </p>
         </div>
-        <NewPatientModal onSuccess={() => fetchPatients()} />
+        <NewPatientModal onSuccess={() => fetchpaciente()} />
       </div>
 
       <Card className="glass-card border-border/50 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
@@ -109,7 +109,7 @@ const Patients = () => {
               </TableHeader>
 
               <TableBody>
-                {filteredPatients.map((patient: any) => {
+                {filteredpaciente.map((patient: any) => {
                   const isMinor = checkIsMinor(patient.dataNascimento);
 
                   return (
@@ -145,7 +145,7 @@ const Patients = () => {
                   );
                 })}
 
-                {filteredPatients.length === 0 && (
+                {filteredpaciente.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={8} className="text-center py-6 text-muted-foreground">
                       Nenhum paciente encontrado.
@@ -161,4 +161,4 @@ const Patients = () => {
   );
 };
 
-export default Patients;
+export default Pacientes;

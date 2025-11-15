@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     --background: 210 40% 98%;
@@ -17,16 +13,19 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 217 91% 60%;
+    /* PRINCIPAIS (roxo + azul) */
+    --primary: 193 91% 62%;   /* Azul da logo */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 173 80% 40%;
+    --secondary: 257 68% 75%; /* Roxo da logo */
     --secondary-foreground: 0 0% 100%;
 
+    /* Auxiliares sem verde */
     --muted: 214 32% 91%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 142 76% 36%;
+    /* Accent removido o verde, agora roxo mais escuro */
+    --accent: 260 45% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -34,33 +33,47 @@ All colors MUST be HSL.
 
     --border: 214 32% 88%;
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ring: 193 91% 62%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 217 91% 60%;
+    /* Sidebar */
+    --sidebar-background: 193 91% 62%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 217 91% 60%;
-    --sidebar-accent: 217 91% 65%;
+    --sidebar-primary-foreground: 193 91% 62%;
+    --sidebar-accent: 205 87% 52%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 217 91% 55%;
+    --sidebar-border: 193 91% 55%;
     --sidebar-ring: 0 0% 100%;
 
-    --success: 142 76% 36%;
-    --warning: 38 92% 50%;
-    --info: 199 89% 48%;
+    /* STATES — sem verde */
+    --success: 205 87% 52%; /* Azul escuro */
+    --warning: 38 92% 50%;  /* Amarelo (mantido pela semiótica) */
+    --info: 193 91% 62%;    /* Azul claro */
+
+    /* GRADIENTES NOVOS — sem verde */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(257 68% 75%) 0%,
+      hsl(193 91% 62%) 100%
+    );
     
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(199 89% 48%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(173 80% 40%) 0%, hsl(142 76% 36%) 100%);
-    
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(260 45% 60%) 0%,
+      hsl(205 87% 52%) 100%
+    );
+
+    /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(215 25% 15% / 0.05);
     --shadow-md: 0 4px 6px -1px hsl(215 25% 15% / 0.1);
     --shadow-lg: 0 10px 15px -3px hsl(215 25% 15% / 0.1);
-    
+
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* DARK MODE */
   .dark {
     --background: 215 28% 17%;
     --foreground: 210 40% 98%;
@@ -71,10 +84,10 @@ All colors MUST be HSL.
     --popover: 215 28% 20%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 193 91% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 173 80% 40%;
+    --secondary: 257 68% 75%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 217 33% 24%;
@@ -88,16 +101,16 @@ All colors MUST be HSL.
 
     --border: 217 33% 24%;
     --input: 217 33% 24%;
-    --ring: 217 91% 60%;
-    
+    --ring: 193 91% 62%;
+
     --sidebar-background: 215 28% 14%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary: 193 91% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 215 28% 20%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217 33% 24%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-ring: 193 91% 62%;
   }
 }
 

@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/table";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 
-const Procedures = () => {
+const Procedimentos = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [procedures, setProcedures] = useState([]);
+  const [procedimento, setprocedimento] = useState([]);
 
-  const loadProcedures = async () => {
+  const loadprocedimento = async () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -33,17 +33,17 @@ const Procedures = () => {
       }
 
       const data = await response.json();
-      setProcedures(data.content);
+      setprocedimento(data.content);
     } catch (error) {
       console.error("Erro ao carregar procedimentos:", error);
     }
   };
 
   useEffect(() => {
-    loadProcedures();
+    loadprocedimento();
   }, []);
 
-  const filtered = procedures.filter((p) =>
+  const filtered = procedimento.filter((p) =>
     p.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -58,7 +58,7 @@ const Procedures = () => {
             Gerencie os procedimentos e valores
           </p>
         </div>
-        <NewProcedureModal onSuccess={loadProcedures} />
+        <NewProcedureModal onSuccess={loadprocedimento} />
       </div>
 
       <Card className="border-border/50">
@@ -109,4 +109,4 @@ const Procedures = () => {
   );
 };
 
-export default Procedures;
+export default Procedimentos;

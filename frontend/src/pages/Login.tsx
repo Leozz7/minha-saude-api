@@ -58,7 +58,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-background via-primary/5 to-secondary/10">
-      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "1s" }} />
@@ -70,9 +69,11 @@ const Login = () => {
           <div className="flex justify-center mb-4">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-2xl blur-xl opacity-75 animate-pulse" />
-              <div className="relative bg-gradient-to-br from-primary to-secondary p-4 rounded-2xl shadow-lg">
-                <Activity className="w-10 h-10 text-white" />
-              </div>
+              <img
+                src="/logo.png"
+                alt="Logo MinhaSaúde"
+                className="relative w-20 h-auto rounded-xl"
+              />
             </div>
           </div>
           
