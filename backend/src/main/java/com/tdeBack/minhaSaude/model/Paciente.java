@@ -33,13 +33,13 @@ public class Paciente {
     @NotBlank
     String nome;
 
+    @NotBlank
     String telefone;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date dataNascimento;
 
-    @NotNull
     String estado;
 
     @NotNull
