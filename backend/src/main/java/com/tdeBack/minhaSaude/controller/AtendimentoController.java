@@ -28,13 +28,7 @@ public class AtendimentoController {
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@RequestBody AtendimentoDTO dto) {
         try {
-            Atendimento atendimento = new Atendimento();
-            atendimento.setNumeroCarteira(dto.getNumeroCarteira());
-            atendimento.setTipoPagamento(dto.getTipoPagamento());
-            atendimento.setProcedimentoIds(dto.getProcedimentoIds());
-            atendimento.setDataAtendimento(dto.getDataAtendimento());
-
-            Atendimento novo = atendimentoService.criar(atendimento, dto.getUsuarioId(), dto.getPacienteId());
+            Atendimento novo = atendimentoService.criar(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(novo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -44,13 +38,7 @@ public class AtendimentoController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody AtendimentoDTO dto) {
         try {
-            Atendimento atendimento = new Atendimento();
-            atendimento.setNumeroCarteira(dto.getNumeroCarteira());
-            atendimento.setTipoPagamento(dto.getTipoPagamento());
-            atendimento.setProcedimentoIds(dto.getProcedimentoIds());
-            atendimento.setDataAtendimento(dto.getDataAtendimento());
-
-            Atendimento atualizado = atendimentoService.atualizar(id, atendimento);
+            Atendimento atualizado = atendimentoService.atualizar(id, dto);
             return ResponseEntity.ok(atualizado);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
