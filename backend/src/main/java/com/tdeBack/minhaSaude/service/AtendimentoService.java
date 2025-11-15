@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import com.tdeBack.minhaSaude.dto.AtendimentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,8 @@ public class AtendimentoService {
     PacienteRepository pacienteRepository;
 
     @Transactional
-    public Atendimento criar(Atendimento atendimento, Long usuario_id, Long paciente_id) {
+    public Atendimento criar(AtendimentoDTO dto) {
+        Atendimento atendimento = converterDTO(dto);
 
         validarAtendimento(atendimento);
 
@@ -41,20 +43,6 @@ public class AtendimentoService {
         if (procedimentos.isEmpty()) {
             throw new IllegalArgumentException("Nenhum procedimento encontrado para os ID informado.");
         }
-
-        LocalDate dataAtendimento = atendimento.getDataAtendimento()
-                .toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-
-        if (dataAtendimento.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("A data de atendimento não pode ser no futuro.");
-        }
-        atendimento.setUsuario(usuarioRepository.findById(usuario_id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado")));
-
-        atendimento.setPaciente(pacienteRepository.findById(paciente_id)
-                .orElseThrow(() -> new IllegalArgumentException("paciente nao encontrado")));
 
 
         atendimento.setValorTotal(calculoValorProcedimentos(procedimentos, atendimento));
@@ -73,7 +61,10 @@ public class AtendimentoService {
     }
 
     @Transactional
-    public Atendimento atualizar(Long id, Atendimento atendimento) {
+    public Atendimento atualizar(Long id, AtendimentoDTO dto) {
+
+        Atendimento atendimento = converterDTO(dto);
+
         Atendimento a = atendimentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Atendimento não encontrado."));
 
@@ -85,6 +76,8 @@ public class AtendimentoService {
         a.setPaciente(atendimento.getPaciente());
         a.setUsuario(atendimento.getUsuario());
         a.setNumeroCarteira(atendimento.getNumeroCarteira());
+        a.setUsuario(atendimento.getUsuario());
+        a.setPaciente(atendimento.getPaciente());
 
         verificarCarteira(a);
 
@@ -130,5 +123,18 @@ public class AtendimentoService {
             }
         }
         return valorTotal;
+    }
+
+    public Atendimento converterDTO(AtendimentoDTO dto) {
+        Atendimento atendimento = new Atendimento();
+        atendimento.setNumeroCarteira(dto.getNumeroCarteira());
+        atendimento.setTipoPagamento(dto.getTipoPagamento());
+        atendimento.setProcedimentoIds(dto.getProcedimentoIds());
+        atendimento.setDataAtendimento(dto.getDataAtendimento());
+        atendimento.setPaciente(pacienteRepository.findById(dto.getPacienteId())
+                .orElseThrow(() -> new IllegalArgumentException("paciente nao encontrado")));
+        atendimento.setUsuario(usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado")));
+        return atendimento;
     }
 }
