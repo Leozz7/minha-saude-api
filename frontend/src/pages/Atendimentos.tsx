@@ -31,7 +31,7 @@ const Atendimentos = () => {
 
         const data = await response.json();
 
-        const formatted = data.map((item: any) => {
+        const formatted = data.content.map((item: any) => {
           const dateObj = new Date(item.dataAtendimento);
 
           return {
@@ -73,7 +73,6 @@ const Atendimentos = () => {
         </CardHeader>
 
         <CardContent>
-          {/* Campo de busca */}
           <div className="mb-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />

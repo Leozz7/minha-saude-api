@@ -40,8 +40,8 @@ const Login = () => {
       localStorage.setItem("email", data.email);
 
       toast({
-        title: "Login realizado!",
-        description: `Bem-vindo, ${data.nome}`,
+        title: "Login bem-sucedido",
+        description: `Bem-vindo de volta, ${data.nome}!`,
       });
 
       navigate("/dashboard");

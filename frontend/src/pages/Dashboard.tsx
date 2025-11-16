@@ -6,7 +6,6 @@ const Dashboard = () => {
   const [totalPacientes, setTotalPacientes] = useState(0);
   const [totalProcedimentos, setTotalProcedimentos] = useState(0);
   const [totalAtendimentosHoje, setTotalAtendimentosHoje] = useState(0);
-
   const [recentes, setRecentes] = useState<any[]>([]);
   const [proximos, setProximos] = useState<any[]>([]);
 
@@ -33,7 +32,8 @@ const Dashboard = () => {
       const atendRes = await fetch("http://localhost:8080/api/atendimentos/listar", { headers });
       const atendData = await atendRes.json();
 
-      const lista = atendData; // vem SEM page/content → já é um array
+      // CORREÇÃO IMPORTANTE: extrair a lista de "content"
+      const lista = atendData.content ?? [];
 
       const hoje = new Date().toISOString().split("T")[0];
 
@@ -43,21 +43,27 @@ const Dashboard = () => {
       );
       setTotalAtendimentosHoje(atendHoje.length);
 
-      // Atendimentos mais recentes (últimos 4)
+      // Atendimentos mais recentes
       const sorted = [...lista].sort(
-        (a, b) => new Date(b.dataAtendimento).getTime() - new Date(a.dataAtendimento).getTime()
+        (a, b) =>
+          new Date(b.dataAtendimento).getTime() -
+          new Date(a.dataAtendimento).getTime()
       );
       setRecentes(sorted.slice(0, 4));
 
-      // Próximos agendamentos (data futura)
-      const futuros = lista.filter((a: any) =>
-        new Date(a.dataAtendimento).getTime() > Date.now()
+      // Próximos agendamentos
+      const futuros = lista.filter(
+        (a: any) =>
+          new Date(a.dataAtendimento).getTime() > Date.now()
       );
-      const futurosOrdenados = futuros.sort(
-        (a, b) => new Date(a.dataAtendimento).getTime() - new Date(b.dataAtendimento).getTime()
-      );
-      setProximos(futurosOrdenados.slice(0, 4));
 
+      const futurosOrdenados = futuros.sort(
+        (a, b) =>
+          new Date(a.dataAtendimento).getTime() -
+          new Date(b.dataAtendimento).getTime()
+      );
+
+      setProximos(futurosOrdenados.slice(0, 4));
     } catch (error) {
       console.error("Erro ao carregar dados do dashboard:", error);
     }
@@ -91,7 +97,6 @@ const Dashboard = () => {
     },
   ];
 
-  // função util para formatar data
   const formatarData = (dateString: string) => {
     const d = new Date(dateString);
     return d.toLocaleDateString("pt-BR");
@@ -99,7 +104,10 @@ const Dashboard = () => {
 
   const formatarHora = (dateString: string) => {
     const d = new Date(dateString);
-    return d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+    return d.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   return (
@@ -125,6 +133,7 @@ const Dashboard = () => {
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {stat.title}
               </CardTitle>
+
               <div className="p-3 rounded-xl bg-white/10 group-hover:scale-110 transition-transform">
                 <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
@@ -141,6 +150,7 @@ const Dashboard = () => {
 
       {/* === LISTAS === */}
       <div className="grid gap-6 md:grid-cols-2">
+
         {/* ATENDIMENTOS RECENTES */}
         <Card className="glass-card border-border/50 hover-lift animate-fade-in-up">
           <CardHeader className="border-b border-border/50">
@@ -149,6 +159,7 @@ const Dashboard = () => {
               Atendimentos Recentes
             </CardTitle>
           </CardHeader>
+
           <CardContent className="pt-6 space-y-3">
             {recentes.map((a: any, index) => (
               <div
@@ -158,8 +169,11 @@ const Dashboard = () => {
               >
                 <div className="flex-1">
                   <p className="font-semibold">{a.paciente.nome}</p>
-                  <p className="text-sm text-muted-foreground">{a.procedimentos[0]?.nome}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {a.procedimentos[0]?.nome}
+                  </p>
                 </div>
+
                 <div className="text-right space-y-1">
                   <p className="font-bold">R$ {a.valorTotal.toFixed(2)}</p>
                   <p className="text-xs text-muted-foreground">
@@ -179,6 +193,7 @@ const Dashboard = () => {
               Próximos Agendamentos
             </CardTitle>
           </CardHeader>
+
           <CardContent className="pt-6 space-y-3">
             {proximos.map((a: any, index) => (
               <div
@@ -188,8 +203,11 @@ const Dashboard = () => {
               >
                 <div className="flex-1">
                   <p className="font-semibold">{a.paciente.nome}</p>
-                  <p className="text-sm text-muted-foreground">{a.procedimentos[0]?.nome}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {a.procedimentos[0]?.nome}
+                  </p>
                 </div>
+
                 <div className="text-right">
                   <p className="font-bold">{formatarData(a.dataAtendimento)}</p>
                   <p className="text-xs text-muted-foreground mt-1">
@@ -200,6 +218,7 @@ const Dashboard = () => {
             ))}
           </CardContent>
         </Card>
+
       </div>
     </div>
   );
