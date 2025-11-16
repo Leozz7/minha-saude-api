@@ -1,4 +1,4 @@
-package com.tdeBack.minhaSaude.dto;
+package com.tdeBack.minhaSaude.dto.entrada;
 
 import com.tdeBack.minhaSaude.model.Responsavel;
 import lombok.*;

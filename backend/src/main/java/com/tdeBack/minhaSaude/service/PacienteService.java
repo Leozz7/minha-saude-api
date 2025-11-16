@@ -1,6 +1,7 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.dto.PacienteDTO;
+import com.tdeBack.minhaSaude.dto.entrada.PacienteDTO;
+import com.tdeBack.minhaSaude.dto.saida.PacienteResponseDTO;
 import com.tdeBack.minhaSaude.model.Paciente;
 import com.tdeBack.minhaSaude.model.Responsavel;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
@@ -28,7 +29,7 @@ public class PacienteService {
     AtendimentoRepository atendimentoRepository;
 
     @Transactional
-    public Paciente criarPaciente(PacienteDTO dto) {
+    public PacienteResponseDTO criar(PacienteDTO dto) {
 
         Paciente paciente = new Paciente();
         paciente.setCpf(dto.getCpf());
@@ -51,12 +52,15 @@ public class PacienteService {
 
         validarPacienteDeMenor(paciente);
 
-        return pacienteRepository.save(paciente);
+        Paciente salvo = pacienteRepository.save(paciente);
+
+        return new PacienteResponseDTO(salvo);
     }
 
     @Transactional
-    public Paciente atualizarPaciente(PacienteDTO paciente, Long id) {
-        Paciente p = pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
+    public PacienteResponseDTO atualizar(PacienteDTO paciente, Long id) {
+        Paciente p = pacienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
 
         p.setCpf(paciente.getCpf());
         p.setBairro(paciente.getBairro());
@@ -70,14 +74,17 @@ public class PacienteService {
                 .orElseThrow(() -> new IllegalArgumentException("Responsavel não encontrado"));
 
         p.setResponsavel(responsavel);
+
         validarPacienteDeMenor(p);
 
-        responsavelRepository.save(p.getResponsavel());
-        return pacienteRepository.save(p);
+        Paciente salvo = pacienteRepository.save(p);
+
+        return new PacienteResponseDTO(salvo);
     }
 
+
     @Transactional
-    public void deletarPaciente(Long id) {
+    public void deletar(Long id) {
         Paciente p = pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
 
         if (!atendimentoRepository.findByPacienteId(id).isEmpty()) {
