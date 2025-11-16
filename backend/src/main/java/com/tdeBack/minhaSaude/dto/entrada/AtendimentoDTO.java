@@ -1,4 +1,4 @@
-package com.tdeBack.minhaSaude.dto;
+package com.tdeBack.minhaSaude.dto.entrada;
 
 import com.tdeBack.minhaSaude.enums.TipoPagamento;
 import lombok.Data;
@@ -8,11 +8,11 @@ import java.util.List;
 
 @Data
 public class AtendimentoDTO {
+
     private Long usuarioId;
     private Long pacienteId;
     private String numeroCarteira;
-    private TipoPagamento tipoPagamento;
     private Date dataAtendimento;
-    private Double valorTotal;
+    private TipoPagamento tipoPagamento;
     private List<Long> procedimentoIds;
 }

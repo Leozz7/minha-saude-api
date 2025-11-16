@@ -40,9 +40,14 @@ export function AppSidebar() {
       <SidebarContent>
         <div className="px-4 py-6">
           <div className="flex items-center gap-3">
-            <div className="bg-sidebar-primary text-sidebar-primary-foreground p-2 rounded-lg">
-              <Home className="w-5 h-5" />
+            <div className="bg-white/80 p-2 rounded-lg shadow-sm">
+              <img
+                src="/logo.png"
+                alt="Logo Minha Saúde"
+                className="w-10 h-10 object-contain"
+              />
             </div>
+
             {state !== "collapsed" && (
               <span className="font-bold text-lg text-sidebar-foreground">
                 MinhaSaúde
