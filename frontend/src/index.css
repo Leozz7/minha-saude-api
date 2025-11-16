@@ -23,7 +23,6 @@
     --muted: 214 32% 91%;
     --muted-foreground: 215 16% 47%;
 
-    /* Accent removido o verde, agora roxo mais escuro */
     --accent: 260 45% 60%;
     --accent-foreground: 0 0% 100%;
 
@@ -46,12 +45,10 @@
     --sidebar-border: 193 91% 55%;
     --sidebar-ring: 0 0% 100%;
 
-    /* STATES — sem verde */
     --success: 205 87% 52%; /* Azul escuro */
-    --warning: 38 92% 50%;  /* Amarelo (mantido pela semiótica) */
+    --warning: 38 92% 50%;  /* Amarelo  */
     --info: 193 91% 62%;    /* Azul claro */
 
-    /* GRADIENTES NOVOS — sem verde */
     --gradient-primary: linear-gradient(
       135deg,
       hsl(257 68% 75%) 0%,
@@ -72,45 +69,6 @@
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* DARK MODE */
-  .dark {
-    --background: 215 28% 17%;
-    --foreground: 210 40% 98%;
-
-    --card: 215 28% 20%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 215 28% 20%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 193 91% 62%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 257 68% 75%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 217 33% 24%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 217 33% 24%;
-    --input: 217 33% 24%;
-    --ring: 193 91% 62%;
-
-    --sidebar-background: 215 28% 14%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 193 91% 62%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 28% 20%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 24%;
-    --sidebar-ring: 193 91% 62%;
-  }
 }
 
 @layer base {
