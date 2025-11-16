@@ -13,11 +13,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    /* PRINCIPAIS (roxo + azul) */
-    --primary: 193 91% 62%;   /* Azul da logo */
+    --primary: 193 91% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 257 68% 75%; /* Roxo da logo */
+    --secondary: 257 68% 75%;
     --secondary-foreground: 0 0% 100%;
 
     /* Auxiliares sem verde */
@@ -38,11 +37,11 @@
     --radius: 0.75rem;
 
     /* Sidebar */
-    --sidebar-background: 193 91% 62%;
+    --sidebar-background: 205 87% 52%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 0 0% 100%;
     --sidebar-primary-foreground: 193 91% 62%;
-    --sidebar-accent: 205 87% 52%;
+    --sidebar-accent: 257 68% 75%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 193 91% 55%;
     --sidebar-ring: 0 0% 100%;
