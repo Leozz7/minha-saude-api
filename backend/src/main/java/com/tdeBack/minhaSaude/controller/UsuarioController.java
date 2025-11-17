@@ -2,6 +2,9 @@ package com.tdeBack.minhaSaude.controller;
 
 import java.util.Map;
 
+import com.tdeBack.minhaSaude.dto.entrada.UsuarioDTO;
+import com.tdeBack.minhaSaude.dto.saida.ProcedimentoResponseDTO;
+import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,9 +33,9 @@ public class UsuarioController {
     private Token tokenService;
 
     @PostMapping("/criar")
-    public ResponseEntity<?> criarUsuario(@RequestBody Usuario u) {
+    public ResponseEntity<?> criarUsuario(@RequestBody UsuarioDTO dto) {
         try {
-            Usuario usuario = usuarioService.criarUsuario(u);
+            UsuarioResponseDTO usuario = usuarioService.criarUsuario(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -74,7 +77,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public Page<Usuario> listar(Pageable pageable) {
-        return usuarioService.listar(pageable);
+    public ResponseEntity<?> listar(Pageable pageable) {
+        return ResponseEntity.ok(
+                usuarioService.listar(pageable)
+                        .map(UsuarioResponseDTO::new)
+        );
     }
 }
