@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import NewAtendimentoModal from "./NovoAtendimento";
 import {
   Table,
   TableBody,
@@ -15,74 +15,86 @@ import { Search } from "lucide-react";
 
 const Atendimentos = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [atendimento, setatendimento] = useState([]);
+  const [atendimentos, setAtendimentos] = useState([]);
+
+  const fetchAtendimentos = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Nenhum token encontrado. Usuário não autenticado.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:8080/api/atendimentos/listar", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao buscar atendimentos");
+      }
+
+      const data = await response.json();
+
+      const formatted = data.content.map((item: any) => {
+        const dateObj = new Date(item.dataAtendimento);
+        return {
+          id: item.id,
+          date: dateObj.toLocaleDateString("pt-BR"),
+          time: dateObj.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
+          patient: item.paciente?.nome ?? "—",
+          procedure: item.procedimentos?.map((p: any) => p.nome).join(", "),
+          type: item.tipoPagamento?.toLowerCase(),
+          value: `R$ ${item.valorTotal.toFixed(2)}`,
+          status: "Confirmado",
+        };
+      });
+
+      setAtendimentos(formatted);
+    } catch (error) {
+      console.error("Erro ao buscar atendimentos:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchatendimento = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch("http://localhost:8080/api/atendimentos/listar", {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-
-        const data = await response.json();
-
-        const formatted = data.content.map((item: any) => {
-          const dateObj = new Date(item.dataAtendimento);
-
-          return {
-            id: item.id,
-            date: dateObj.toLocaleDateString("pt-BR"),
-            time: dateObj.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-            patient: item.paciente?.nome ?? "—",
-            procedure: item.procedimentos?.map((p: any) => p.nome).join(", "),
-            type: item.tipoPagamento?.toLowerCase(),
-            value: `R$ ${item.valorTotal.toFixed(2)}`,
-            status: "Confirmado",
-          };
-        });
-
-        setatendimento(formatted);
-      } catch (error) {
-        console.error("Erro ao buscar atendimentos:", error);
-      }
-    };
-
-    fetchatendimento();
+    fetchAtendimentos();
   }, []);
 
-  const filteredatendimento = atendimento.filter((a: any) => {
-    const term = searchTerm.toLowerCase();
-
-    return (
-      a.patient.toLowerCase().includes(term) ||
-      a.procedure.toLowerCase().includes(term)
-    );
-  });
+  const filteredAtendimentos = atendimentos.filter((a: any) =>
+    a.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    a.procedure.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-slide-in">
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight font-display bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+            Atendimentos
+          </h1>
+          <p className="text-muted-foreground mt-2 text-lg">
+            Gerencie os atendimentos da clínica
+          </p>
+        </div>
+        <NewAtendimentoModal onSuccess={() => fetchAtendimentos()} />
+      </div>
 
-      <Card className="glass-card border-border/50 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-        <CardHeader className="border-b border-border/50">
-          <CardTitle className="text-xl font-display">Lista de Atendimentos</CardTitle>
+      <Card className="glass-card border-border/50 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+        <CardHeader>
+          <CardTitle>Lista de Atendimentos</CardTitle>
         </CardHeader>
 
         <CardContent>
-          <div className="mb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="Buscar por paciente ou procedimento..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+          <div className="mb-4 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por paciente ou procedimento..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
 
           <div className="rounded-md border">
@@ -99,13 +111,11 @@ const Atendimentos = () => {
               </TableHeader>
 
               <TableBody>
-                {filteredatendimento.map((appointment: any) => (
+                {filteredAtendimentos.map((appointment: any) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <div className="font-medium">{appointment.date}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {appointment.time}
-                      </div>
+                      <div className="text-sm text-muted-foreground">{appointment.time}</div>
                     </TableCell>
 
                     <TableCell className="font-medium">{appointment.patient}</TableCell>
@@ -121,14 +131,12 @@ const Atendimentos = () => {
                     <TableCell className="font-medium">{appointment.value}</TableCell>
 
                     <TableCell>
-                      <Badge variant={appointment.status === "Confirmado" ? "default" : "outline"}>
-                        {appointment.status}
-                      </Badge>
+                      <Badge variant="default">{appointment.status}</Badge>
                     </TableCell>
                   </TableRow>
                 ))}
 
-                {filteredatendimento.length === 0 && (
+                {filteredAtendimentos.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
                       Nenhum atendimento encontrado.

@@ -18,7 +18,6 @@ const Pacientes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [paciente, setpaciente] = useState([]);
 
-  // 🔥 Busca da API
   const fetchpaciente = async () => {
     try {
       const token = localStorage.getItem("token");
