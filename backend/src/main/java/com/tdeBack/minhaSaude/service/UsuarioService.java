@@ -1,5 +1,7 @@
 package com.tdeBack.minhaSaude.service;
 
+import com.tdeBack.minhaSaude.dto.entrada.UsuarioDTO;
+import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,16 +28,28 @@ public class UsuarioService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Usuario criarUsuario(Usuario usuario) {
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+    public UsuarioResponseDTO criarUsuario(UsuarioDTO dto) {
+
+        if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("Email já cadastrado");
         }
-        if (usuario.getTipo() == null) {
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail(dto.getEmail());
+        usuario.setNome(dto.getNome());
+        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+
+        if (dto.getTipoUsuario() == null) {
             usuario.setTipo(TipoUsuario.USER);
+        } else {
+            usuario.setTipo(dto.getTipoUsuario());
         }
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
+
+        Usuario u = usuarioRepository.save(usuario);
+
+        return new UsuarioResponseDTO(u);
     }
+
 
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario uAtualizado) {
