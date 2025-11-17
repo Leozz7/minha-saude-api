@@ -55,12 +55,6 @@ const Pacientes = () => {
     p.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const checkIsMinor = (birthDateString: string) => {
-    const birthDate = new Date(birthDateString);
-    const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-    return age < 18;
-  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -110,8 +104,6 @@ const Pacientes = () => {
 
               <TableBody>
                 {filteredpaciente.map((patient: any) => {
-                  const isMinor = checkIsMinor(patient.dataNascimento);
-
                   return (
                     <TableRow key={patient.id}>
                       <TableCell className="font-medium">{patient.nome}</TableCell>
@@ -123,7 +115,7 @@ const Pacientes = () => {
                       </TableCell>
 
                       <TableCell>
-                        {isMinor ? (
+                        {patient.responsavel != null ? (
                           <Badge variant="secondary">Menor de Idade</Badge>
                         ) : (
                           <Badge variant="outline">Maior de Idade</Badge>
@@ -131,7 +123,7 @@ const Pacientes = () => {
                       </TableCell>
 
                       <TableCell>
-                        {isMinor && patient.responsavel ? (
+                        {patient.responsavel ? (
                           <span className="text-sm text-muted-foreground">
                             {patient.responsavel.nome}
                           </span>
