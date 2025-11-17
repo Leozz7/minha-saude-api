@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tdeBack.minhaSaude.dto.ProcedimentoDTO;
+import com.tdeBack.minhaSaude.dto.entrada.ProcedimentoDTO;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
 
