@@ -1,11 +1,12 @@
 package com.tdeBack.minhaSaude.service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
-import com.tdeBack.minhaSaude.dto.AtendimentoDTO;
+import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
+import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,25 +34,29 @@ public class AtendimentoService {
     PacienteRepository pacienteRepository;
 
     @Transactional
-    public Atendimento criar(AtendimentoDTO dto) {
+    public AtendimentoResponseDTO criar(AtendimentoDTO dto) {
+
         Atendimento atendimento = converterDTO(dto);
 
         validarAtendimento(atendimento);
 
-        List<Procedimento> procedimentos = procedimentoRepository.findAllById(atendimento.getProcedimentoIds());
+        List<Procedimento> procedimentos =
+                procedimentoRepository.findAllById(atendimento.getProcedimentoIds());
 
         if (procedimentos.isEmpty()) {
-            throw new IllegalArgumentException("Nenhum procedimento encontrado para os ID informado.");
+            throw new IllegalArgumentException("Nenhum procedimento encontrado.");
         }
 
-
-        atendimento.setValorTotal(calculoValorProcedimentos(procedimentos, atendimento));
         atendimento.setProcedimentos(procedimentos);
+        atendimento.setValorTotal(calculoValorProcedimentos(procedimentos, atendimento));
 
         verificarCarteira(atendimento);
 
-        return atendimentoRepository.save(atendimento);
+        atendimento = atendimentoRepository.save(atendimento);
+
+        return new AtendimentoResponseDTO(atendimento);
     }
+
 
     @Transactional
     public void deletar(Long id) {
@@ -93,8 +98,8 @@ public class AtendimentoService {
         return atendimentoRepository.save(a);
     }
 
-    public List<Atendimento> listar() {
-        return atendimentoRepository.findAll();
+    public Page<Atendimento> listar(Pageable pageable) {
+        return atendimentoRepository.findAll(pageable);
     }
 
     private void verificarCarteira(Atendimento atendimento) {
