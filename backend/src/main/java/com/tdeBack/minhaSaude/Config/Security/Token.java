@@ -23,8 +23,8 @@ public class Token {
 
     public String gerarToken(Usuario usuario) {
         return Jwts.builder()
-                .setSubject(usuario.getEmail())
-                .claim("id", usuario.getId())
+                .setSubject(usuario.getId().toString())
+                .claim("email", usuario.getEmail())
                 .claim("nome", usuario.getNome())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -32,14 +32,14 @@ public class Token {
                 .compact();
     }
 
-    public String validarToken(String token) {
+    public Long validarToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            return claims.getSubject();
+            return Long.parseLong(claims.getSubject());
         } catch (JwtException | IllegalArgumentException e) {
             return null;
         }

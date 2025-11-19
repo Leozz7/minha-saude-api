@@ -44,12 +44,13 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario u) {
-
         Usuario usuarioLogado = usuarioService.login(u);
 
         String token = tokenService.gerarToken(usuarioLogado);
+
         return ResponseEntity.ok(Map.of(
                 "token", token,
+                "id", usuarioLogado.getId(),
                 "email", usuarioLogado.getEmail(),
                 "nome", usuarioLogado.getNome()
         ));

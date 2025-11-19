@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.Config.Security;
 
+import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -37,14 +38,15 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         if (token != null && !token.isBlank()) {
-            String email = tokenService.validarToken(token);
 
-            if (email != null && !email.isBlank()) {
-                UserDetails user = usuarioRepository.findByEmail(email);
+            Long userId = tokenService.validarToken(token);
 
-                if (user != null) {
+            if (userId != null) {
+                UserDetails usuario = usuarioRepository.findById(userId).orElse(null);
+
+                if (usuario != null) {
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                            new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
