@@ -12,9 +12,11 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const NewProcedureModal = ({ onSuccess }: any) => {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const [form, setForm] = useState({
     nome: "",
@@ -58,9 +60,17 @@ const NewProcedureModal = ({ onSuccess }: any) => {
         valorPlano: "",
         valorParticular: "",
       });
-
-    } catch (err) {
-      console.error("Erro:", err);
+      toast({
+        title: "Procedimento criado",
+        description: `Procedimento ${form.nome} criado com sucesso!`,
+      })
+    } catch (erro) {
+      toast({
+        title: "Erro ao registrar procedimento",
+        description: "Verifique os dados e tente novamente",
+        variant: "destructive",
+      });
+      console.error("Erro ao criar procedimento:", erro);
     }
   };
 

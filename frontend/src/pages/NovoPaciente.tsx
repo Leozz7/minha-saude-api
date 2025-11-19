@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface NewPatientModalProps {
   onSuccess: () => void;
@@ -33,6 +34,7 @@ interface PatientForm {
 }
 
 const NewPatientModal = ({ onSuccess }: NewPatientModalProps) => {
+  const { toast } = useToast();
   const [form, setForm] = useState<PatientForm>({
     nome: "",
     cpf: "",
@@ -108,7 +110,7 @@ const NewPatientModal = ({ onSuccess }: NewPatientModalProps) => {
 
       onSuccess();
       setOpen(false);
-      // Resetar formulário ao fechar
+      
       setForm({
         nome: "",
         cpf: "",
@@ -124,7 +126,16 @@ const NewPatientModal = ({ onSuccess }: NewPatientModalProps) => {
         responsavelTelefone: "",
         responsavelDataNascimento: "",
       });
+      toast({
+        title: "Paciente criado",
+        description: `Paciente ${form.nome} criado com sucesso!`,
+      })
     } catch (error) {
+      toast({
+        title: "Erro ao registrar paciente",
+        description: "Verifique os dados e tente novamente",
+        variant: "destructive",
+      });
       console.error("Erro:", error);
     }
   };
@@ -188,7 +199,7 @@ const NewPatientModal = ({ onSuccess }: NewPatientModalProps) => {
             </div>
           </div>
 
-          {/* --- RESPONSÁVEL (somente se menor) --- */}
+          {/* --- RESPONSÁVEL --- */}
           {isMinor() && (
             <div className="space-y-3 pt-2 border-t">
               <h3 className="font-semibold text-lg">Responsável</h3>
