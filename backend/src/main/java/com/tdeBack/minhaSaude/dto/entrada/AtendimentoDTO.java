@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class AtendimentoDTO {
 
-    private Long usuarioId;
     private Long pacienteId;
     private String numeroCarteira;
     private Date dataAtendimento;

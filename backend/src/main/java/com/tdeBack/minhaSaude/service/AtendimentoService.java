@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
 import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
+import com.tdeBack.minhaSaude.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,15 +133,25 @@ public class AtendimentoService {
     }
 
     public Atendimento converterDTO(AtendimentoDTO dto) {
+        Usuario usuario = (Usuario) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
         Atendimento atendimento = new Atendimento();
+
         atendimento.setNumeroCarteira(dto.getNumeroCarteira());
         atendimento.setTipoPagamento(dto.getTipoPagamento());
         atendimento.setProcedimentoIds(dto.getProcedimentoIds());
         atendimento.setDataAtendimento(dto.getDataAtendimento());
-        atendimento.setPaciente(pacienteRepository.findById(dto.getPacienteId())
-                .orElseThrow(() -> new IllegalArgumentException("paciente nao encontrado")));
-        atendimento.setUsuario(usuarioRepository.findById(dto.getUsuarioId())
+        atendimento.setUsuario(usuarioRepository.findById(usuario.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado")));
+
+        atendimento.setPaciente(
+                pacienteRepository.findById(dto.getPacienteId())
+                        .orElseThrow(() -> new IllegalArgumentException("Paciente não encontrado"))
+        );
+
         return atendimento;
     }
+
 }
