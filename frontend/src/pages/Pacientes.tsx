@@ -91,6 +91,7 @@ const Pacientes = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Id</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>CPF</TableHead>
                   <TableHead>Email</TableHead>
@@ -105,6 +106,7 @@ const Pacientes = () => {
                 {filteredpaciente.map((patient: any) => {
                   return (
                     <TableRow key={patient.id}>
+                      <TableCell>{patient.id}</TableCell>
                       <TableCell className="font-medium">{patient.nome}</TableCell>
                       <TableCell>{patient.cpf}</TableCell>
                       <TableCell>{patient.email}</TableCell>

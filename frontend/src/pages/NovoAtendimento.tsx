@@ -18,7 +18,6 @@ interface NewAtendimentoModalProps {
 }
 
 interface AtendimentoForm {
-  usuarioId: string;
   pacienteId: string;
   procedimentoIds: string;
   tipoPagamento: string;
@@ -29,7 +28,6 @@ interface AtendimentoForm {
 const NewAtendimentoModal = ({ onSuccess }: NewAtendimentoModalProps) => {
   const { toast } = useToast();
   const [form, setForm] = useState<AtendimentoForm>({
-    usuarioId: "",
     pacienteId: "",
     procedimentoIds: "",
     tipoPagamento: "",
@@ -49,7 +47,6 @@ const NewAtendimentoModal = ({ onSuccess }: NewAtendimentoModalProps) => {
       const token = localStorage.getItem("token");
 
       const payload = {
-        usuarioId: Number(form.usuarioId),
         pacienteId: Number(form.pacienteId),
         procedimentoIds: form.procedimentoIds
           .split(",")
@@ -75,9 +72,7 @@ const NewAtendimentoModal = ({ onSuccess }: NewAtendimentoModalProps) => {
       onSuccess();
       setOpen(false);
 
-      // reset
       setForm({
-        usuarioId: "",
         pacienteId: "",
         procedimentoIds: "",
         tipoPagamento: "",
@@ -119,11 +114,6 @@ const NewAtendimentoModal = ({ onSuccess }: NewAtendimentoModalProps) => {
             <h3 className="font-semibold text-lg">Dados</h3>
 
             <div className="grid grid-cols-2 gap-4">
-
-              <div className="space-y-1">
-                <Label>Usuário ID</Label>
-                <Input name="usuarioId" value={form.usuarioId} onChange={handleChange} />
-              </div>
 
               <div className="space-y-1">
                 <Label>Paciente ID</Label>

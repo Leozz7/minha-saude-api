@@ -83,6 +83,7 @@ const Procedimentos = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Id</TableHead>
                   <TableHead>Nome</TableHead>
                   <TableHead>Descrição</TableHead>
                   <TableHead>Preço Plano</TableHead>
@@ -93,6 +94,7 @@ const Procedimentos = () => {
               <TableBody>
                 {filtered.map((p) => (
                   <TableRow key={p.id}>
+                    <TableCell>{p.id}</TableCell>
                     <TableCell className="font-medium">{p.nome}</TableCell>
                     <TableCell className="text-muted-foreground">{p.descricao}</TableCell>
                     <TableCell className="font-medium">R$ {p.valorPlano}</TableCell>
