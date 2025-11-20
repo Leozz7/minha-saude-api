@@ -50,9 +50,6 @@ public class PacienteService {
             throw new IllegalArgumentException("CPF de paciente ja cadastrado");
         }
 
-        if (paciente.getCpf().length() != 11) {
-            throw new IllegalArgumentException("CPF de paciente invalido");
-        }
 
         validarPacienteDeMenor(paciente);
 
@@ -127,10 +124,6 @@ public class PacienteService {
 
             if (idadeResp < 18) {
                 throw new IllegalArgumentException("O responsavel não pode ser menor de idade");
-            }
-
-            if (paciente.getResponsavel().getCpf().length() != 11) {
-                throw new IllegalArgumentException("CPF de responsavel invalido");
             }
 
             if (responsavelRepository.existsByEmail(paciente.getResponsavel().getEmail())) {
