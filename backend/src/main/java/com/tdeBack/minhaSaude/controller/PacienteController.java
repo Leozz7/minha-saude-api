@@ -1,8 +1,8 @@
 package com.tdeBack.minhaSaude.controller;
 
-import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
-import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import com.tdeBack.minhaSaude.dto.saida.PacienteResponseDTO;
+import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
+import org.hibernate.boot.model.source.internal.hbm.AttributesHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,8 +67,18 @@ public class PacienteController {
         );
     }
 
-    @GetMapping("/buscar/{nome}")
+    @GetMapping("/buscarNome/{nome}")
     public Page<Paciente> buscarPorNome(@PathVariable String nome, Pageable pageable) {
         return pacienteService.buscarPorNome(nome, pageable);
+    }
+
+    @GetMapping("/buscarId/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            PacienteResponseDTO paciente = pacienteService.buscarPorId(id);
+            return ResponseEntity.ok(paciente);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

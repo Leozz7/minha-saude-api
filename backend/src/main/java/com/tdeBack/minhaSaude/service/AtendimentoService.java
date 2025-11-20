@@ -2,9 +2,6 @@ package com.tdeBack.minhaSaude.service;
 
 import java.util.List;
 
-import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
-import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
-import com.tdeBack.minhaSaude.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
+import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import com.tdeBack.minhaSaude.enums.TipoPagamento;
 import com.tdeBack.minhaSaude.model.Atendimento;
 import com.tdeBack.minhaSaude.model.Procedimento;
+import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import com.tdeBack.minhaSaude.repository.PacienteRepository;
 import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
@@ -68,7 +68,7 @@ public class AtendimentoService {
     }
 
     @Transactional
-    public Atendimento atualizar(Long id, AtendimentoDTO dto) {
+    public AtendimentoResponseDTO atualizar(Long id, AtendimentoDTO dto) {
 
         Atendimento atendimento = converterDTO(dto);
 
@@ -97,11 +97,19 @@ public class AtendimentoService {
 
         a.setValorTotal(calculoValorProcedimentos(procedimentos, atendimento));
 
-        return atendimentoRepository.save(a);
+        Atendimento atualizado = atendimentoRepository.save(a);
+
+        return new AtendimentoResponseDTO(atualizado);
     }
 
     public Page<Atendimento> listar(Pageable pageable) {
         return atendimentoRepository.findAll(pageable);
+    }
+
+    public AtendimentoResponseDTO buscarPorId(Long id) {
+        Atendimento atendimento = atendimentoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Atendimento nao encontrado"));
+        return new AtendimentoResponseDTO(atendimento);
     }
 
     private void verificarCarteira(Atendimento atendimento) {

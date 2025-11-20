@@ -4,6 +4,7 @@ import com.tdeBack.minhaSaude.dto.entrada.ProcedimentoDTO;
 import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import com.tdeBack.minhaSaude.dto.saida.PacienteResponseDTO;
 import com.tdeBack.minhaSaude.dto.saida.ProcedimentoResponseDTO;
+import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.service.ProcedimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class ProcedimentoController {
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@RequestBody ProcedimentoDTO dto) {
         try {
-            Procedimento p = procedimentoService.criar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ProcedimentoResponseDTO(p));
+            ProcedimentoResponseDTO p = procedimentoService.criar(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(p);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -33,8 +34,8 @@ public class ProcedimentoController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ProcedimentoDTO dto) {
         try {
-            Procedimento p = procedimentoService.atualizar(id, dto);
-            return ResponseEntity.ok(new ProcedimentoResponseDTO(p));
+            ProcedimentoResponseDTO p = procedimentoService.atualizar(id, dto);
+            return ResponseEntity.ok(p);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -53,6 +54,16 @@ public class ProcedimentoController {
         try {
             procedimentoService.deletar(id);
             return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<?> buscarId(@PathVariable Long id) {
+        try {
+            ProcedimentoResponseDTO p = procedimentoService.buscarPorId(id);
+            return ResponseEntity.ok(p);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

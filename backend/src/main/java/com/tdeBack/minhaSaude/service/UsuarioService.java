@@ -1,7 +1,5 @@
 package com.tdeBack.minhaSaude.service;
 
-import com.tdeBack.minhaSaude.dto.entrada.UsuarioDTO;
-import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tdeBack.minhaSaude.dto.entrada.UsuarioDTO;
+import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
 import com.tdeBack.minhaSaude.enums.TipoUsuario;
 import com.tdeBack.minhaSaude.model.Usuario;
 import com.tdeBack.minhaSaude.repository.UsuarioRepository;
@@ -52,7 +52,7 @@ public class UsuarioService {
 
 
     @Transactional
-    public Usuario atualizarUsuario(Long id, Usuario uAtualizado) {
+    public UsuarioResponseDTO atualizarUsuario(Long id, Usuario uAtualizado) {
         Usuario u = usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
 
@@ -61,7 +61,9 @@ public class UsuarioService {
         u.setNome(uAtualizado.getNome());
         u.setEmail(uAtualizado.getEmail());
         u.setSenha(uAtualizado.getSenha());
-        return usuarioRepository.save(u);
+
+        Usuario atualizado = usuarioRepository.save(u);
+        return new UsuarioResponseDTO(atualizado);
     }
 
     public Usuario login(Usuario u) {
@@ -80,5 +82,11 @@ public class UsuarioService {
 
     public Page<Usuario> listar(Pageable pageable) {
         return usuarioRepository.findAll(pageable);
+    }
+
+    public UsuarioResponseDTO buscarPorId(Long id) {
+        Usuario u = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado"));
+        return new UsuarioResponseDTO(u);
     }
 }

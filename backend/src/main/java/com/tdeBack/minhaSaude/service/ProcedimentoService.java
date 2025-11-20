@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tdeBack.minhaSaude.dto.entrada.ProcedimentoDTO;
+import com.tdeBack.minhaSaude.dto.saida.ProcedimentoResponseDTO;
 import com.tdeBack.minhaSaude.model.Procedimento;
 import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
 
@@ -17,7 +18,7 @@ public class ProcedimentoService {
 
 
     @Transactional
-    public Procedimento criar(ProcedimentoDTO dto) {
+    public ProcedimentoResponseDTO criar(ProcedimentoDTO dto) {
         Procedimento p = new Procedimento();
         p.setNome(dto.getNome());
         p.setDescricao(dto.getDescricao());
@@ -32,7 +33,10 @@ public class ProcedimentoService {
         if (p.getValorParticular() < 0) {
             throw new IllegalArgumentException("o valor particular está negativo");
         }
-        return procedimentoRepository.save(p);
+
+        Procedimento atualizado = procedimentoRepository.save(p);
+
+        return new ProcedimentoResponseDTO(procedimentoRepository.save(atualizado));
     }
 
     @Transactional
@@ -42,7 +46,7 @@ public class ProcedimentoService {
     }
 
     @Transactional
-    public Procedimento atualizar(Long id, ProcedimentoDTO dto) {
+    public ProcedimentoResponseDTO atualizar(Long id, ProcedimentoDTO dto) {
 
         Procedimento p = procedimentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Procedimento não encontrado"));
@@ -56,10 +60,17 @@ public class ProcedimentoService {
         p.setValorPlano(dto.getValorPlano());
         p.setValorParticular(dto.getValorParticular());
 
-        return procedimentoRepository.save(p);
+        Procedimento atualizado = procedimentoRepository.save(p);
+        return new ProcedimentoResponseDTO(atualizado);
     }
 
     public Page<Procedimento> listar(Pageable pageable) {
         return procedimentoRepository.findAll(pageable);
+    }
+
+    public ProcedimentoResponseDTO buscarPorId(Long id) {
+        Procedimento p = procedimentoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Procedimento nao encontrado"));
+        return new ProcedimentoResponseDTO(p);
     }
 }

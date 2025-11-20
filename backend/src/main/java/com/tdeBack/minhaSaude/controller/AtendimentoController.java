@@ -1,8 +1,5 @@
 package com.tdeBack.minhaSaude.controller;
 
-import java.util.List;
-
-import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdeBack.minhaSaude.dto.entrada.AtendimentoDTO;
+import com.tdeBack.minhaSaude.dto.saida.AtendimentoResponseDTO;
 import com.tdeBack.minhaSaude.model.Atendimento;
 import com.tdeBack.minhaSaude.service.AtendimentoService;
+
 
 @RestController
 @RequestMapping("/api/atendimentos")
@@ -40,7 +39,7 @@ public class AtendimentoController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody AtendimentoDTO dto) {
         try {
-            Atendimento atualizado = atendimentoService.atualizar(id, dto);
+            AtendimentoResponseDTO atualizado = atendimentoService.atualizar(id, dto);
             return ResponseEntity.ok(atualizado);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -64,4 +63,15 @@ public class AtendimentoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            AtendimentoResponseDTO atendimento = atendimentoService.buscarPorId(id);
+            return ResponseEntity.ok(atendimento);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    
 }

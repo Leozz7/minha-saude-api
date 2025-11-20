@@ -1,5 +1,18 @@
 package com.tdeBack.minhaSaude.service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
+
+import com.tdeBack.minhaSaude.dto.saida.ProcedimentoResponseDTO;
+import com.tdeBack.minhaSaude.model.Procedimento;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tdeBack.minhaSaude.dto.entrada.PacienteDTO;
 import com.tdeBack.minhaSaude.dto.saida.PacienteResponseDTO;
 import com.tdeBack.minhaSaude.model.Paciente;
@@ -7,15 +20,6 @@ import com.tdeBack.minhaSaude.model.Responsavel;
 import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import com.tdeBack.minhaSaude.repository.PacienteRepository;
 import com.tdeBack.minhaSaude.repository.ResponsavelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
 
 @Service
 public class PacienteService {
@@ -100,6 +104,11 @@ public class PacienteService {
 
     public Page<Paciente> buscarPorNome(String nome, Pageable pageable) {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome, pageable);
+    }
+
+    public PacienteResponseDTO buscarPorId(Long id) {
+        Paciente p = pacienteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Paciente nao encontrado"));
+        return new PacienteResponseDTO(p);
     }
 
     public void validarPacienteDeMenor(Paciente paciente) {

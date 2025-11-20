@@ -60,7 +60,7 @@ public class UsuarioController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
         try {
-            Usuario usuario = usuarioService.atualizarUsuario(id, u);
+            UsuarioResponseDTO usuario = usuarioService.atualizarUsuario(id, u);
             return ResponseEntity.ok(usuario);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -83,5 +83,15 @@ public class UsuarioController {
                 usuarioService.listar(pageable)
                         .map(UsuarioResponseDTO::new)
         );
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<?> buscarId(@PathVariable Long id) {
+        try {
+            UsuarioResponseDTO usuario = usuarioService.buscarPorId(id);
+            return ResponseEntity.ok(usuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
