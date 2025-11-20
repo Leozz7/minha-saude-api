@@ -34,12 +34,8 @@ public class UsuarioController {
 
     @PostMapping("/criar")
     public ResponseEntity<?> criarUsuario(@RequestBody UsuarioDTO dto) {
-        try {
-            UsuarioResponseDTO usuario = usuarioService.criarUsuario(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        UsuarioResponseDTO usuario = usuarioService.criarUsuario(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @PostMapping("/login")
@@ -59,22 +55,14 @@ public class UsuarioController {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
-        try {
-            UsuarioResponseDTO usuario = usuarioService.atualizarUsuario(id, u);
-            return ResponseEntity.ok(usuario);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        UsuarioResponseDTO usuario = usuarioService.atualizarUsuario(id, u);
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarUsuario(@PathVariable Long id) {
-        try {
-            usuarioService.deletarUsuario(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        usuarioService.deletarUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/listar")
@@ -87,11 +75,7 @@ public class UsuarioController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarId(@PathVariable Long id) {
-        try {
-            UsuarioResponseDTO usuario = usuarioService.buscarPorId(id);
-            return ResponseEntity.ok(usuario);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        UsuarioResponseDTO usuario = usuarioService.buscarPorId(id);
+        return ResponseEntity.ok(usuario);
     }
 }

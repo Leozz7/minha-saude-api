@@ -23,22 +23,14 @@ public class ProcedimentoController {
 
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@RequestBody ProcedimentoDTO dto) {
-        try {
-            ProcedimentoResponseDTO p = procedimentoService.criar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(p);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        ProcedimentoResponseDTO p = procedimentoService.criar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ProcedimentoDTO dto) {
-        try {
-            ProcedimentoResponseDTO p = procedimentoService.atualizar(id, dto);
-            return ResponseEntity.ok(p);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        ProcedimentoResponseDTO p = procedimentoService.atualizar(id, dto);
+        return ResponseEntity.ok(p);
     }
 
     @GetMapping("/listar")
@@ -51,21 +43,13 @@ public class ProcedimentoController {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            procedimentoService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        procedimentoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarId(@PathVariable Long id) {
-        try {
-            ProcedimentoResponseDTO p = procedimentoService.buscarPorId(id);
-            return ResponseEntity.ok(p);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        ProcedimentoResponseDTO p = procedimentoService.buscarPorId(id);
+        return ResponseEntity.ok(p);
     }
 }

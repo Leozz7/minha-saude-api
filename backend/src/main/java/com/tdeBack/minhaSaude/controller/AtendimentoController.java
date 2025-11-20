@@ -28,22 +28,14 @@ public class AtendimentoController {
 
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@RequestBody AtendimentoDTO dto) {
-        try {
-            AtendimentoResponseDTO atendimento = atendimentoService.criar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(atendimento);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        AtendimentoResponseDTO atendimento = atendimentoService.criar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(atendimento);
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody AtendimentoDTO dto) {
-        try {
-            AtendimentoResponseDTO atualizado = atendimentoService.atualizar(id, dto);
-            return ResponseEntity.ok(atualizado);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        AtendimentoResponseDTO atualizado = atendimentoService.atualizar(id, dto);
+        return ResponseEntity.ok(atualizado);
     }
 
     @GetMapping("/listar")
@@ -56,22 +48,15 @@ public class AtendimentoController {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            atendimentoService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        atendimentoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        try {
-            AtendimentoResponseDTO atendimento = atendimentoService.buscarPorId(id);
-            return ResponseEntity.ok(atendimento);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+
+        AtendimentoResponseDTO atendimento = atendimentoService.buscarPorId(id);
+        return ResponseEntity.ok(atendimento);
     }
     
 }

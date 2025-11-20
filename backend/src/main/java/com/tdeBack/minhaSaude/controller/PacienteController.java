@@ -31,32 +31,21 @@ public class PacienteController {
 
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@RequestBody PacienteDTO dto) {
-        try {
-            PacienteResponseDTO paciente = pacienteService.criar(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(paciente);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        PacienteResponseDTO paciente = pacienteService.criar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(paciente);
     }
 
     @PutMapping("/atualizar/{id}")
     ResponseEntity<?> atualizar(@RequestBody PacienteDTO dto, @PathVariable Long id) {
-        try {
-            PacienteResponseDTO paciente = pacienteService.atualizar(dto, id);
-            return ResponseEntity.ok(paciente);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        PacienteResponseDTO paciente = pacienteService.atualizar(dto, id);
+        return ResponseEntity.ok(paciente);
     }
 
     @DeleteMapping("/deletar/{id}")
     ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            pacienteService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        pacienteService.deletar(id);
+        return ResponseEntity.noContent().build();
+
     }
 
     @GetMapping("/listar")
@@ -74,11 +63,7 @@ public class PacienteController {
 
     @GetMapping("/buscarId/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        try {
-            PacienteResponseDTO paciente = pacienteService.buscarPorId(id);
+        PacienteResponseDTO paciente = pacienteService.buscarPorId(id);
             return ResponseEntity.ok(paciente);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 }
