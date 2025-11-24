@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "API Minha Sa\u00fade - Testes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Criar Paciente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/criar"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"nome\": \"Maria Souza\",\n  \"email\": \"marsia@email.com\",\n  \"telefone\": \"988888888\",\n  \"dataNascimento\": \"2010-08-15\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Bairro Novo\",\n  \"responsavel\": {\n    \"cpf\": \"821.944.380-02\",\n    \"nome\": \"Carlos Souza\",\n    \"email\": \"carlsos@email.com\",\n    \"telefone\": \"977777777\",\n    \"dataNascimento\": \"1980-04-20\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Paciente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/atualizar/{{id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"email\": \"maria.silva@nova.com\",\n  \"nome\": \"Maria da Silva Santos\",\n  \"telefone\": \"(71) 99876-5432\",\n  \"dataNascimento\": \"1990-05-12\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Caminho das \\u00c1rvores\",\n  \"responsavel\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar Pacientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/listar?size=1&sort=nome,desc"
+            }
+          }
+        },
+        {
+          "name": "Deletar Paciente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/deletar/{{id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Atendimentos",
+      "item": [
+        {
+          "name": "Criar Atendimento",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/criar"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"PLANO-554488\",\n  \"tipoPagamento\": \"PLANO\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Atendimento",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/atualizar/{{id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"\",\n  \"tipoPagamento\": \"PARTICULAR\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar Atendimentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/listar"
+            }
+          }
+        },
+        {
+          "name": "Deletar Atendimento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/deletar/{{id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Procedimentos",
+      "item": [
+        {
+          "name": "Criar Procedimento",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/procedimentos/criar"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ultrassom Obst\\u00e9trico\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento gestacional\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Procedimento",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/procedimentos/atualizar/{{id}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ultrassom Obst\\u00e9trico - Revisado\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento da gravidez\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar Procedimentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/procedimentos/listar"
+            }
+          }
+        },
+        {
+          "name": "Deletar Procedimento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/procedimentos/deletar/{{id}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usu\u00e1rios",
+      "item": [
+        {
+          "name": "Criar Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/criar"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"nome\": \"Leandro Snea\",\n  \"tipo\": \"ADMIN\",\n  \"senha\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Criar Usu\u00e1rio",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/criar"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"nome\": \"TESTANDO\",\n  \"tipo\": \"USER\",\n  \"senha\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"senha\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login Usu\u00e1rio",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/login"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"senha\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar Usu\u00e1rios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/listar"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Usu\u00e1rio",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/atualizar/1"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Thiago Mariano\",\n  \"email\": \"thiago@example.com\",\n  \"senha\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Deletar Usu\u00e1rio",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/deletar/1"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
