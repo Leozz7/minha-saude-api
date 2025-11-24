@@ -24,7 +24,7 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @CPF
+    @CPF(message = "cpf de paciente invalido")
     @NotBlank
     String cpf;
 

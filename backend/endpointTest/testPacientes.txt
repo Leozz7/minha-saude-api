@@ -3,7 +3,7 @@ POST - Criar Paciente
 http://localhost:8080/api/pacientes/criar
 
 {
-  "cpf": "98765324234100",
+  "cpf": "390.533.447-05",
   "nome": "Maria Souza",
   "email": "marsia@email.com",
   "telefone": "988888888",
@@ -12,7 +12,7 @@ http://localhost:8080/api/pacientes/criar
   "cidade": "Salvador",
   "bairro": "Bairro Novo",
   "responsavel": {
-    "cpf": "112233423444556",
+    "cpf": "821.944.380-02",
     "nome": "Carlos Souza",
     "email": "carlsos@email.com",
     "telefone": "977777777",
@@ -25,7 +25,7 @@ PUT - Atualizar Paciente
 http://localhost:8080/api/pacientes/atualizar/{id}
 
 {
-  "cpf": "123.456.789-10",
+  "cpf": "390.533.447-05",
   "email": "maria.silva@nova.com",
   "nome": "Maria da Silva Santos",
   "telefone": "(71) 99876-5432",
