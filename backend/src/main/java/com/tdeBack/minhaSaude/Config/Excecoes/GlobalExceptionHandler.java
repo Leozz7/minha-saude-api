@@ -1,4 +1,4 @@
-package com.tdeBack.minhaSaude.excesoes;
+package com.tdeBack.minhaSaude.Config.Excecoes;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.Response;
