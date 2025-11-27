@@ -36,6 +36,15 @@ public class PacienteService {
     public PacienteResponseDTO criar(PacienteDTO dto) {
 
         Paciente paciente = new Paciente();
+
+        if (pacienteRepository.existsByCpf(dto.getCpf())) {
+            throw new IllegalArgumentException("CPF de paciente ja cadastrado");
+        }
+
+        if (pacienteRepository.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("Email de paciente ja cadastrado");
+        }
+
         paciente.setCpf(dto.getCpf());
         paciente.setEmail(dto.getEmail());
         paciente.setNome(dto.getNome());
@@ -45,11 +54,6 @@ public class PacienteService {
         paciente.setEstado(dto.getEstado());
         paciente.setTelefone(dto.getTelefone());
         paciente.setResponsavel(dto.getResponsavel());
-
-        if (pacienteRepository.existsByCpf(paciente.getCpf())) {
-            throw new IllegalArgumentException("CPF de paciente ja cadastrado");
-        }
-
 
         validarPacienteDeMenor(paciente);
 
@@ -62,6 +66,14 @@ public class PacienteService {
     public PacienteResponseDTO atualizar(PacienteDTO paciente, Long id) {
         Paciente p = pacienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
+
+        if (pacienteRepository.existsByCpf(paciente.getCpf())) {
+            throw new IllegalArgumentException("CPF de paciente ja cadastrado");
+        }
+
+        if (pacienteRepository.existsByEmail(paciente.getEmail())) {
+            throw new IllegalArgumentException("Email de paciente ja cadastrado");
+        }
 
         p.setCpf(paciente.getCpf());
         p.setBairro(paciente.getBairro());
