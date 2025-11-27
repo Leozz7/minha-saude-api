@@ -42,7 +42,7 @@ public class AtendimentoController {
         );
     }
 
-    @GetMapping("/listar-periodo")
+    @GetMapping("/listarPeriodo")
     public ResponseEntity<?> listarPorPeriodo(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date inicio,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fim,

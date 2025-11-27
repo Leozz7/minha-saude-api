@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/procedimento/criar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/procedimento/atualizar/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/procedimento/deletar/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/atendimento/deletar/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/atendimentos/deletar/{id}").hasRole("ADMIN")
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
