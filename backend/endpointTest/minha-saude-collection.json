@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "API Minha Sa\u00fade - Testes",
+    "name": "API Minha Saúde - Corrigida",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -11,13 +11,28 @@
           "name": "Criar Paciente",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/pacientes/criar"
+              "raw": "http://localhost:8080/api/pacientes/criar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "criar"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"nome\": \"Maria Souza\",\n  \"email\": \"marsia@email.com\",\n  \"telefone\": \"988888888\",\n  \"dataNascimento\": \"2010-08-15\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Bairro Novo\",\n  \"responsavel\": {\n    \"cpf\": \"821.944.380-02\",\n    \"nome\": \"Carlos Souza\",\n    \"email\": \"carlsos@email.com\",\n    \"telefone\": \"977777777\",\n    \"dataNascimento\": \"1980-04-20\"\n  }\n}"
+              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"nome\": \"Maria Souza\",\n  \"email\": \"marsia@email.com\",\n  \"telefone\": \"988888888\",\n  \"dataNascimento\": \"2010-08-15\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Bairro Novo\",\n  \"responsavel\": {\n    \"cpf\": \"821.944.380-02\",\n    \"nome\": \"Carlos Souza\",\n    \"email\": \"carlsos@email.com\",\n    \"telefone\": \"977777777\",\n    \"dataNascimento\": \"1980-04-20\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -25,13 +40,28 @@
           "name": "Atualizar Paciente",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/pacientes/atualizar/{{id}}"
+              "raw": "http://localhost:8080/api/pacientes/atualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "atualizar", "1"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"email\": \"maria.silva@nova.com\",\n  \"nome\": \"Maria da Silva Santos\",\n  \"telefone\": \"(71) 99876-5432\",\n  \"dataNascimento\": \"1990-05-12\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Caminho das \\u00c1rvores\",\n  \"responsavel\": null\n}"
+              "raw": "{\n  \"cpf\": \"390.533.447-05\",\n  \"email\": \"maria.silva@nova.com\",\n  \"nome\": \"Maria da Silva Santos\",\n  \"telefone\": \"(71) 99876-5432\",\n  \"dataNascimento\": \"1990-05-12\",\n  \"estado\": \"Bahia\",\n  \"cidade\": \"Salvador\",\n  \"bairro\": \"Caminho das Árvores\",\n  \"responsavel\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -39,9 +69,69 @@
           "name": "Listar Pacientes",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/pacientes/listar?size=1&sort=nome,desc"
+              "raw": "http://localhost:8080/api/pacientes/listar?size=10&sort=nome,desc",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "listar"],
+              "query": [
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sort",
+                  "value": "nome,desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Paciente por Nome",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/buscarNome/Maria",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "buscarNome", "Maria"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Paciente por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/pacientes/buscarId/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "buscarId", "1"]
             }
           }
         },
@@ -49,9 +139,19 @@
           "name": "Deletar Paciente",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/pacientes/deletar/{{id}}"
+              "raw": "http://localhost:8080/api/pacientes/deletar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pacientes", "deletar", "1"]
             }
           }
         }
@@ -64,13 +164,28 @@
           "name": "Criar Atendimento",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/atendimentos/criar"
+              "raw": "http://localhost:8080/api/atendimentos/criar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "criar"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"PLANO-554488\",\n  \"tipoPagamento\": \"PLANO\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}"
+              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"PLANO-554488\",\n  \"tipoPagamento\": \"PLANO\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -78,13 +193,28 @@
           "name": "Atualizar Atendimento",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/atendimentos/atualizar/{{id}}"
+              "raw": "http://localhost:8080/api/atendimentos/atualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "atualizar", "1"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"\",\n  \"tipoPagamento\": \"PARTICULAR\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}"
+              "raw": "{\n  \"usuarioId\": 1,\n  \"pacienteId\": 2,\n  \"numeroCarteira\": \"\",\n  \"tipoPagamento\": \"PARTICULAR\",\n  \"dataAtendimento\": \"2024-10-28T10:30:00\",\n  \"procedimentoIds\": [\n    1\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -92,9 +222,69 @@
           "name": "Listar Atendimentos",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/atendimentos/listar"
+              "raw": "http://localhost:8080/api/atendimentos/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "listar"]
+            }
+          }
+        },
+        {
+          "name": "Listar Atendimentos por Período",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/listarPeriodo?inicio=2024-01-01T00:00:00&fim=2024-12-31T23:59:59",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "listarPeriodo"],
+              "query": [
+                {
+                  "key": "inicio",
+                  "value": "2024-01-01T00:00:00"
+                },
+                {
+                  "key": "fim",
+                  "value": "2024-12-31T23:59:59"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Atendimento por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/atendimentos/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "buscar", "1"]
             }
           }
         },
@@ -102,9 +292,19 @@
           "name": "Deletar Atendimento",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/atendimentos/deletar/{{id}}"
+              "raw": "http://localhost:8080/api/atendimentos/deletar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "atendimentos", "deletar", "1"]
             }
           }
         }
@@ -117,13 +317,28 @@
           "name": "Criar Procedimento",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/procedimentos/criar"
+              "raw": "http://localhost:8080/api/procedimentos/criar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "procedimentos", "criar"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Ultrassom Obst\\u00e9trico\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento gestacional\"\n}"
+              "raw": "{\n  \"nome\": \"Ultrassom Obstétrico\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento gestacional\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -131,13 +346,28 @@
           "name": "Atualizar Procedimento",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/procedimentos/atualizar/{{id}}"
+              "raw": "http://localhost:8080/api/procedimentos/atualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "procedimentos", "atualizar", "1"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Ultrassom Obst\\u00e9trico - Revisado\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento da gravidez\"\n}"
+              "raw": "{\n  \"nome\": \"Ultrassom Obstétrico - Revisado\",\n  \"valorPlano\": 150.0,\n  \"valorParticular\": 300.0,\n  \"descricao\": \"Exame de imagem para acompanhamento da gravidez\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -145,9 +375,39 @@
           "name": "Listar Procedimentos",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/procedimentos/listar"
+              "raw": "http://localhost:8080/api/procedimentos/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "procedimentos", "listar"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Procedimento por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/procedimentos/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "procedimentos", "buscar", "1"]
             }
           }
         },
@@ -155,16 +415,26 @@
           "name": "Deletar Procedimento",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8080/api/procedimentos/deletar/{{id}}"
+              "raw": "http://localhost:8080/api/procedimentos/deletar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "procedimentos", "deletar", "1"]
             }
           }
         }
       ]
     },
     {
-      "name": "Usu\u00e1rios",
+      "name": "Usuários",
       "item": [
         {
           "name": "Criar Admin",
@@ -172,25 +442,43 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/criar"
+              "raw": "http://localhost:8080/api/usuarios/criar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "criar"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"nome\": \"Leandro Snea\",\n  \"tipo\": \"ADMIN\",\n  \"senha\": \"123456\"\n}"
+              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"nome\": \"Leandro Snea\",\n  \"tipo\": \"ADMIN\",\n  \"senha\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Criar Usu\u00e1rio",
+          "name": "Criar Usuário Comum",
           "request": {
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/criar"
+              "raw": "http://localhost:8080/api/usuarios/criar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "criar"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"nome\": \"TESTANDO\",\n  \"tipo\": \"USER\",\n  \"senha\": \"123456\"\n}"
+              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"nome\": \"TESTANDO\",\n  \"tipo\": \"USER\",\n  \"senha\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -200,30 +488,48 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/login"
+              "raw": "http://localhost:8080/api/usuarios/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "login"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"senha\": \"123456\"\n}"
+              "raw": "{\n  \"email\": \"leandro.sena@example.com\",\n  \"senha\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Login Usu\u00e1rio",
+          "name": "Login Usuário",
           "request": {
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/login"
+              "raw": "http://localhost:8080/api/usuarios/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "login"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"senha\": \"123456\"\n}"
+              "raw": "{\n  \"email\": \"testando.sena@example.com\",\n  \"senha\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Listar Usu\u00e1rios",
+          "name": "Listar Usuários",
           "request": {
             "method": "GET",
             "header": [
@@ -234,12 +540,56 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/listar"
+              "raw": "http://localhost:8080/api/usuarios/listar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "listar"]
             }
           }
         },
         {
-          "name": "Atualizar Usu\u00e1rio",
+          "name": "Buscar Usuário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/buscar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "buscar", "1"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Usuário por Email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/buscarEmail/leandro.sena@example.com",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "buscarEmail", "leandro.sena@example.com"]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Usuário",
           "request": {
             "method": "PUT",
             "header": [
@@ -250,16 +600,25 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/atualizar/1"
+              "raw": "http://localhost:8080/api/usuarios/atualizar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "atualizar", "1"]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Thiago Mariano\",\n  \"email\": \"thiago@example.com\",\n  \"senha\": \"123456\"\n}"
+              "raw": "{\n  \"nome\": \"Thiago Mariano\",\n  \"email\": \"thiago@example.com\",\n  \"senha\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Deletar Usu\u00e1rio",
+          "name": "Deletar Usuário",
           "request": {
             "method": "DELETE",
             "header": [
@@ -270,7 +629,11 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:8080/api/usuarios/deletar/1"
+              "raw": "http://localhost:8080/api/usuarios/deletar/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "deletar", "1"]
             }
           }
         }
