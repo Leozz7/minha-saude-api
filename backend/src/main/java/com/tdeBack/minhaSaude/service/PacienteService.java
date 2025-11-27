@@ -67,12 +67,13 @@ public class PacienteService {
         Paciente p = pacienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paciente nao encontrado"));
 
-        if (pacienteRepository.existsByCpf(paciente.getCpf())) {
+        Paciente pacienteExistenteCpf = pacienteRepository.findByCpf(paciente.getCpf());
+        if (pacienteExistenteCpf != null && !pacienteExistenteCpf.getId().equals(id)) {
             throw new IllegalArgumentException("CPF de paciente ja cadastrado");
         }
-
-        if (pacienteRepository.existsByEmail(paciente.getEmail())) {
-            throw new IllegalArgumentException("Email de paciente ja cadastrado");
+        Paciente pacienteExistenteEmail = pacienteRepository.findByEmail(paciente.getEmail());
+        if (pacienteExistenteEmail != null && !pacienteExistenteEmail.getId().equals(id)) {
+            throw new IllegalArgumentException("Email de paciente");
         }
 
         p.setCpf(paciente.getCpf());
