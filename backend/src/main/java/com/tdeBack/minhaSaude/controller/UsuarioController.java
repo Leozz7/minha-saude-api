@@ -5,11 +5,13 @@ import java.util.Map;
 import com.tdeBack.minhaSaude.dto.entrada.UsuarioDTO;
 import com.tdeBack.minhaSaude.dto.saida.ProcedimentoResponseDTO;
 import com.tdeBack.minhaSaude.dto.saida.UsuarioResponseDTO;
+import com.tdeBack.minhaSaude.enums.TipoUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +56,11 @@ public class UsuarioController {
 
     @GetMapping("/buscarEmail/{email}")
     public ResponseEntity<?> buscarEmail(@PathVariable String email) {
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (usuarioLogado.getTipo() != TipoUsuario.ADMIN && !usuarioLogado.getEmail().equals(email)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(" voce nao tem permissao para consultar dados de outro usuario.");
+        }
         UsuarioResponseDTO usuario = usuarioService.findByEmail(email);
         return ResponseEntity.ok(usuario);
     }
