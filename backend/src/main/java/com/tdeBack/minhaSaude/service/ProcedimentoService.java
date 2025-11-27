@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.service;
 
+import com.tdeBack.minhaSaude.repository.AtendimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,9 @@ import com.tdeBack.minhaSaude.repository.ProcedimentoRepository;
 public class ProcedimentoService {
     @Autowired
     ProcedimentoRepository procedimentoRepository;
+
+    @Autowired
+    AtendimentoRepository atendimentoRepository;
 
 
     @Transactional
@@ -42,6 +46,9 @@ public class ProcedimentoService {
     @Transactional
     public void deletar(Long id) {
         Procedimento p = procedimentoRepository.findById(id).orElseThrow(() -> new RuntimeException("Procedimento nao encontrado"));
+        if (!atendimentoRepository.findByProcedimentoId(id).isEmpty()) {
+            throw new IllegalArgumentException("tem um atendimento com esse procedimento");
+        }
         procedimentoRepository.delete(p);
     }
 
