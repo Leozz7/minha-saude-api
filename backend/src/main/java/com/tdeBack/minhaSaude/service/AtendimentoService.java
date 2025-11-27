@@ -1,5 +1,6 @@
 package com.tdeBack.minhaSaude.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,9 @@ public class AtendimentoService {
         return new AtendimentoResponseDTO(atendimento);
     }
 
+    public Page<Atendimento> listarPorPeriodo(Date inicio, Date fim, Pageable pageable) {
+        return atendimentoRepository.findByDataAtendimentoBetween(inicio, fim, pageable);
+    }
 
     @Transactional
     public void deletar(Long id) {
