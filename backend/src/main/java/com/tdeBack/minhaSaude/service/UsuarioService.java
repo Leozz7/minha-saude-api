@@ -80,6 +80,10 @@ public class UsuarioService {
         usuarioRepository.delete(u);
     }
 
+    public UsuarioResponseDTO findByEmail(String email) {
+        return new UsuarioResponseDTO((Usuario) usuarioRepository.findByEmail(email));
+    }
+
     public Page<Usuario> listar(Pageable pageable) {
         return usuarioRepository.findAll(pageable);
     }

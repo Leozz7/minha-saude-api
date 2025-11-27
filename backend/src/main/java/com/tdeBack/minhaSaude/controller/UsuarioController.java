@@ -52,6 +52,12 @@ public class UsuarioController {
         ));
     }
 
+    @GetMapping("/buscarEmail/{email}")
+    public ResponseEntity<?> buscarEmail(@PathVariable String email) {
+        UsuarioResponseDTO usuario = usuarioService.findByEmail(email);
+        return ResponseEntity.ok(usuario);
+    }
+
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario u, @PathVariable Long id) {
