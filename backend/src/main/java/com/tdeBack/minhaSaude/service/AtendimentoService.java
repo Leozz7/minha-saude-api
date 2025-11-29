@@ -60,9 +60,6 @@ public class AtendimentoService {
         return new AtendimentoResponseDTO(atendimento);
     }
 
-    public Page<Atendimento> listarPorPeriodo(Date inicio, Date fim, Pageable pageable) {
-        return atendimentoRepository.findByDataAtendimentoBetween(inicio, fim, pageable);
-    }
 
     @Transactional
     public void deletar(Long id) {
@@ -104,6 +101,10 @@ public class AtendimentoService {
         Atendimento atualizado = atendimentoRepository.save(a);
 
         return new AtendimentoResponseDTO(atualizado);
+    }
+
+    public Page<Atendimento> listarPorPeriodo(Date inicio, Date fim, Pageable pageable) {
+        return atendimentoRepository.findByDataAtendimentoBetween(inicio, fim, pageable);
     }
 
     public Page<Atendimento> listar(Pageable pageable) {

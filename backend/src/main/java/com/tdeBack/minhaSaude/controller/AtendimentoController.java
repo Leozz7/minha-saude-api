@@ -42,6 +42,12 @@ public class AtendimentoController {
         );
     }
 
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        atendimentoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/listarPeriodo")
     public ResponseEntity<?> listarPorPeriodo(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date inicio,
@@ -54,17 +60,11 @@ public class AtendimentoController {
         );
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        atendimentoService.deletar(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
 
         AtendimentoResponseDTO atendimento = atendimentoService.buscarPorId(id);
         return ResponseEntity.ok(atendimento);
     }
-    
+
 }

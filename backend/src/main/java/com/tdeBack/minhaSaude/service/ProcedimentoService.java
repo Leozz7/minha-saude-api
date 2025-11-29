@@ -46,7 +46,7 @@ public class ProcedimentoService {
     @Transactional
     public void deletar(Long id) {
         Procedimento p = procedimentoRepository.findById(id).orElseThrow(() -> new RuntimeException("Procedimento nao encontrado"));
-        if (!atendimentoRepository.findByProcedimentoId(id).isEmpty()) {
+        if (!atendimentoRepository.findById(id).isEmpty()) {
             throw new IllegalArgumentException("tem um atendimento com esse procedimento");
         }
         procedimentoRepository.delete(p);
