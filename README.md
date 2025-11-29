@@ -3,7 +3,6 @@
 Este projeto foi desenvolvido como parte do **Trabalho de Desenvolvimento de Exercício (TDE)** da disciplina de **Programação Backend**.  
 Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de clínicas médicas**, com autenticação via **JWT** e persistência em banco de dados relacional.
 
-
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.4-green)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
