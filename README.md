@@ -3,47 +3,47 @@
 Este projeto foi desenvolvido como parte do **Trabalho de Desenvolvimento de Exercício (TDE)** da disciplina de **Programação Backend**.  
 Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de clínicas médicas**, com autenticação via **JWT** e persistência em banco de dados relacional.
 
+
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.4-green)
+![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
+![Swagger](https://img.shields.io/badge/Docs-Swagger-85EA2D)
+
 ---
 
 ## ⚙️ Tecnologias Utilizadas
-- **Java 21**  
-- **Spring Boot**
-- **Spring Security + JWT**  
-- **Spring Data JPA / Hibernate**  
-- **MySQL**  
-- **Maven**  
+
+* **Linguagem:** Java 21
+* **Framework:** Spring Boot 3.3.4
+* **Segurança:** Spring Security + JWT (JSON Web Token)
+* **Banco de Dados:** MySQL
+* **Persistência:** Spring Data JPA / Hibernate
+* **Documentação:** SpringDoc OpenApi (Swagger UI)
+* **Ferramentas:** Maven, Lombok, Dotenv 
 
 ---
 
-## 🔑 Funcionalidades
+## 🔑 Funcionalidades e Regras de Negócio
 
 ### 👥 Gestão de Usuários
-- Cadastro de usuários
-- Atualização dos próprios dados  
-- Alteração de senha com senha anterior  
-- Reset de senha por **admin**  
-- Exclusão de usuários (restrições quando há atendimentos vinculados)  
-- Login e autenticação via **JWT**  
+* **Autenticação:** Login seguro retornando Token JWT (Bearer).
+* **Permissões:** Sistema de perfis (`ADMIN` e `USER`).
+* **CRUD:** Cadastro e atualização de dados cadastrais.
+* **Segurança:** Senhas criptografadas com `BCrypt`.
 
 ### 👩‍⚕️ Gestão de Pacientes
-- Cadastro, atualização e exclusão de pacientes  
-- Validações:
-  - CPF e e-mail únicos  
-  - Responsável obrigatório para menores de idade  
+* **Validações:** CPF e E-mail únicos no sistema.
+* **Regra de Menor de Idade:** O sistema calcula a idade automaticamente. Se o paciente for menor de 18 anos, é **obrigatório** cadastrar um Responsável (que deve ser maior de idade).
 
 ### 🧾 Gestão de Procedimentos
-- Cadastro, atualização e exclusão (**somente admin**)  
-- Preços diferenciados: **plano** ou **particular**  
+* **Acesso Restrito:** Apenas administradores podem criar, atualizar ou remover procedimentos.
+* **Precificação Dinâmica:** Suporte a dois valores distintos por procedimento: `valorPlano` e `valorParticular`.
 
 ### 📂 Gestão de Atendimentos
-- Registro de atendimentos com paciente, procedimentos e tipo (plano/particular)  
-- Cálculo automático do valor total  
-- Alteração/remoção apenas pelo criador ou **admin**  
-
-### 🔎 Consultas
-- Busca de usuários, pacientes, procedimentos e atendimentos (por **ID** ou lista paginada)  
-- Listagem de atendimentos entre duas datas  
-
+* **Cálculo Automático:** O valor total do atendimento é calculado somando os procedimentos, aplicando o valor correto com base no `TipoPagamento` escolhido.
+* **Validação de Convênio:** Se o pagamento for via `PLANO`, o número da carteira é obrigatório.
+* **Relatórios:** Listagem de atendimentos filtrada por período (data inicial e final).
+* 
 ---
 ## 🚀 Como Rodar o Projeto
 
@@ -68,6 +68,7 @@ mvn spring-boot:run
 ```
 ### 4. Teste a API
 Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
+💡 Há uma collection do Postman pronta para uso na pasta: backend/endpointTest/minha-saude-collection.json.
 
 ---
 ## 📘 Documentação com Swagger
@@ -77,3 +78,13 @@ A API possui documentação interativa gerada automaticamente pelo **Swagger**, 
 Após iniciar o projeto, acesse:
 
 - **http://localhost:8080/swagger-ui/index.html**
+
+## 📝 Estrutura de Endpoints Principais
+
+| **Método** | **Endpoint**                | **Descrição**                     | **Permissão**   |
+|------------|------------------------------|-----------------------------------|------------------|
+| POST       | `/api/usuarios/login`        | Gerar Token de Acesso             | Livre            |
+| POST       | `/api/usuarios/criar`        | Criar novo usuário                | Livre            |
+| GET        | `/api/pacientes/listar`      | Listar pacientes (paginado)       | Autenticado      |
+| POST       | `/api/atendimentos/criar`    | Registrar atendimento             | Autenticado      |
+| POST       | `/api/procedimentos/criar`   | Cadastrar procedimento            | Admin            |
