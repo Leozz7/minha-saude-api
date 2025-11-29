@@ -67,8 +67,8 @@ JWT_EXPIRATION=1000000000
 mvn spring-boot:run
 ```
 ### 4. Teste a API
-Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
--💡 Há uma collection do Postman pronta para uso na pasta: backend/endpointTest/minha-saude-collection.json.
+* Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
+* 💡 Há uma collection do Postman pronta para uso na pasta: backend/endpointTest/minha-saude-collection.json.
 
 ---
 ## 📘 Documentação com Swagger
