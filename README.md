@@ -43,7 +43,7 @@ Ele implementa uma **API REST** em **Java (Spring Boot)** para a **gestão de cl
 * **Cálculo Automático:** O valor total do atendimento é calculado somando os procedimentos, aplicando o valor correto com base no `TipoPagamento` escolhido.
 * **Validação de Convênio:** Se o pagamento for via `PLANO`, o número da carteira é obrigatório.
 * **Relatórios:** Listagem de atendimentos filtrada por período (data inicial e final).
-* 
+
 ---
 ## 🚀 Como Rodar o Projeto
 
@@ -68,7 +68,7 @@ mvn spring-boot:run
 ```
 ### 4. Teste a API
 Utilize ferramentas como Postman, Insomnia ou outro cliente HTTP.
-💡 Há uma collection do Postman pronta para uso na pasta: backend/endpointTest/minha-saude-collection.json.
+-💡 Há uma collection do Postman pronta para uso na pasta: backend/endpointTest/minha-saude-collection.json.
 
 ---
 ## 📘 Documentação com Swagger
